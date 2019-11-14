@@ -5,9 +5,6 @@ package extend;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import javax.swing.JLabel;
 
 /**
  * 
