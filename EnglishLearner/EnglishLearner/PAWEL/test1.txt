@@ -1,0 +1,12 @@
+jeden
+one
+dwa
+two
+trzy
+three
+cztery
+four
+pięć
+five
+sześć
+six
