@@ -270,6 +270,7 @@ public class Teacher extends JFrame implements ActionListener{
 				proc.nextWord();
 				answear.setText("");
 			}
+			
 				
 
 		}

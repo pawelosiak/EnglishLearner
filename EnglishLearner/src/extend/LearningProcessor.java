@@ -28,7 +28,7 @@ public class LearningProcessor {
 		
 		
 		listWords = prepareList(list);
-		System.out.println("Lista z klasy procesoer: "+listWords.toString());
+		System.out.println("Lista z klasy procesor: "+listWords.toString());
 
 		
 	}
@@ -51,14 +51,13 @@ public class LearningProcessor {
 	synchronized void selectWord() throws InterruptedException {
 		
 		if(counterP<listWords.size()-1) {
-			
-			Teacher.check.setText("CHECK");
-			
+
 			Teacher.questionWord.setText(""+listWords.get(counterP));
 			counterP+=2;
 		}else {
+			
 					counterP=0;
-					Teacher.check.setText("REPEAT?");
+					
 		}
 	}
 
@@ -180,11 +179,15 @@ public class LearningProcessor {
 		
 	}
 	
+	/**
+	 * This methods clears last starting processor content.
+	 */
 	public void clear() {
 		
 		listWords.clear();
 		
-		
+		counterE=1;
+		counterP=0;
 		System.out.println("Lista z klasy procesor po czyszczeniu: "+listWords.toString());
 	}
 	
