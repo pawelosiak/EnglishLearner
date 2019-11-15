@@ -70,7 +70,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	private PrintWriter pw;
 	private Scanner sc, sc1, sc2;
 	private JFileChooser fc;
-	private FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", ".txt");
+	private FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", ".txt");
 	public static String u;
 	Teacher tea;
 	/**
@@ -325,6 +325,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			defined = new File(path);
 			fc = new JFileChooser(defined);
 			fc.addChoosableFileFilter(filter);
+			JOptionPane.showConfirmDialog(null, "Dodaj .txt na końcu nazwy pliku aby utworzyć plik tekstowy!", "Important!", DISPOSE_ON_CLOSE, JOptionPane.INFORMATION_MESSAGE);
 			
 
 			if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -381,6 +382,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			}else if(!gotWordE(getE())) {
 				JOptionPane.showConfirmDialog(null, "Uzupełnij angielskie słówko!", "Wrong value", DISPOSE_ON_CLOSE, JOptionPane.ERROR_MESSAGE);
 			}
+			
 		}
 		if (source == zak) {
 
