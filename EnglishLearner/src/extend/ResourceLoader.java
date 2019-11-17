@@ -5,9 +5,17 @@ import java.io.InputStreamReader;
 
 import javax.swing.JDialog;
 
+/**
+ * @author pawel
+ *
+ */
 final public class ResourceLoader {
 
 	static JDialog dialog = new JDialog();
+	/**
+	 * @param path
+	 * @return InputStream
+	 */
 	public static InputStream load(String path) 
 	{
 		InputStream input = ResourceLoader.class.getResourceAsStream(path);
@@ -17,6 +25,10 @@ final public class ResourceLoader {
 		return input;
 	}
 	
+	/**
+	 * @param path
+	 * @return BUfferedReader
+	 */
 	public static BufferedReader loadOBJ(String path) {
 		
 		

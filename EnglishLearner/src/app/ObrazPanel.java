@@ -30,6 +30,9 @@ public class ObrazPanel extends JPanel {
 	private BufferedImage image;
 	private JDialog dialog = new JDialog();
 
+	/**
+	 * 
+	 */
 	public ObrazPanel() {
 
 		File imageFile = new File("Logo.png");

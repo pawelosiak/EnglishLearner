@@ -239,7 +239,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 
 		test.setForeground(Color.RED);
 		nauka.addItemListener(this);
-		test.addItemListener(this);
+		//test.addItemListener(this);
 		tworzenie.addItemListener(this);
 		dodanie.addItemListener(this);
 
@@ -449,7 +449,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			
 			else if(source.equals(test)) {
 
-				startTest.setEnabled(true);
+				startTest.setEnabled(false);
 				nauka.setEnabled(false);
 				tworzenie.setEnabled(false);
 				dodanie.setEnabled(false);
