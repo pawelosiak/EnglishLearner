@@ -272,7 +272,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		wprowadzanie.add(angielski);
 		wprowadzanie.add(dod);
 		wprowadzanie.add(zak);
-		wprowadzanie.setVisible(true);
+		wprowadzanie.setVisible(false);
 
 		polskiE.setToolTipText("Słówko musi mieć minimum jedną literę!");
 		angielskiE.setToolTipText("Słówko musi mieć minimum dwie litery!");
