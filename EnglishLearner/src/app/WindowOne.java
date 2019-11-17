@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import extend.Teacher;
+import extend.testModule.*;
 
 /**
  * 
@@ -50,8 +51,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	private JPanel all = new JPanel();
 	private JPanel wprowadzanie = new JPanel();
 	private JPanel wprowadzanie1 = new JPanel();
-	private JButton start1 = new JButton("START_LERN");
-	private JButton start2 = new JButton("START_TEST");
+	private JButton startLearn = new JButton("START_LERN");
+	private JButton startTest = new JButton("START_TEST");
 	private JButton create = new JButton("CREATE");
 	private JButton add = new JButton("MODIFY");
 	private JButton exit = new JButton("BACK");
@@ -238,12 +239,12 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 
 		test.setForeground(Color.RED);
 		nauka.addItemListener(this);
-		//test.addItemListener(this);
+		test.addItemListener(this);
 		tworzenie.addItemListener(this);
 		dodanie.addItemListener(this);
 
-		start1.addActionListener(this);
-		start2.addActionListener(this);
+		startLearn.addActionListener(this);
+		startTest.addActionListener(this);
 		create.addActionListener(this);
 		add.addActionListener(this);
 		exit.addActionListener(this);
@@ -251,8 +252,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		dod.addActionListener(this);
 		dodE.addActionListener(this);
 		zakE.addActionListener(this);
-		start1.setEnabled(false);
-		start2.setEnabled(false);
+		startLearn.setEnabled(false);
+		startTest.setEnabled(false);
 		create.setEnabled(false);
 		add.setEnabled(false);
 		
@@ -287,8 +288,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		wprowadzanie1.setVisible(false);
 
 		guziki.setLayout(new FlowLayout(FlowLayout.LEFT));
-		guziki.add(start1);
-		guziki.add(start2);
+		guziki.add(startLearn);
+		guziki.add(startTest);
 		guziki.add(create);
 		guziki.add(add);
 		guziki.add(exit);
@@ -309,7 +310,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 
 		Object source = e.getSource();
 
-		if (source == start1) {
+		if (source == startLearn) {
 
 			tea = new Teacher();
 			tea.u = WindowOne.u;
@@ -317,7 +318,9 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			this.dispose();
 		}
 
-		if (source == start2) {
+		if (source == startTest) {
+			Tester test = new Tester();
+			this.dispose();
 		}
 
 		if (source == create) {
@@ -437,7 +440,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 
 			if (source.equals(nauka)) {
 
-				start1.setEnabled(true);
+				startLearn.setEnabled(true);
 				test.setEnabled(false);
 				tworzenie.setEnabled(false);
 				dodanie.setEnabled(false);
@@ -446,7 +449,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			
 			else if(source.equals(test)) {
 
-				start2.setEnabled(true);
+				startTest.setEnabled(true);
 				nauka.setEnabled(false);
 				tworzenie.setEnabled(false);
 				dodanie.setEnabled(false);
@@ -477,8 +480,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			
 		
 		case 0: {
-			start1.setEnabled(false);
-			start2.setEnabled(false);
+			startLearn.setEnabled(false);
+			startTest.setEnabled(false);
 			create.setEnabled(false);
 			add.setEnabled(false);
 			nauka.setEnabled(true);
@@ -489,8 +492,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			break;
 		}
 		default: {
-			start1.setEnabled(false);
-			start2.setEnabled(false);
+			startLearn.setEnabled(false);
+			startTest.setEnabled(false);
 			create.setEnabled(false);
 			add.setEnabled(false);
 			nauka.setEnabled(true);
