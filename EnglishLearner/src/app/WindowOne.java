@@ -272,7 +272,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		wprowadzanie.add(angielski);
 		wprowadzanie.add(dod);
 		wprowadzanie.add(zak);
-		wprowadzanie.setVisible(false);
+		wprowadzanie.setVisible(true);
 
 		polskiE.setToolTipText("Słówko musi mieć minimum jedną literę!");
 		angielskiE.setToolTipText("Słówko musi mieć minimum dwie litery!");
@@ -295,6 +295,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		all.setLayout(new GridLayout(4, 1));
 		all.add(boxy);
 		all.add(guziki);
+		all.add(wprowadzanie);
+		all.add(wprowadzanie1);
 
 		add(all);
 
@@ -316,8 +318,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		}
 
 		if (source == startTest) {
-//			testWin = new Tester();
-//			this.dispose();
+
 		}
 
 		if (source == create) {
@@ -446,7 +447,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 			
 			else if(source.equals(test)) {
 
-				startTest.setEnabled(false);
+				startTest.setEnabled(true);
 				nauka.setEnabled(false);
 				tworzenie.setEnabled(false);
 				dodanie.setEnabled(false);

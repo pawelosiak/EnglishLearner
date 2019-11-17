@@ -28,8 +28,8 @@ public class Tester extends javax.swing.JFrame {
         this.setLocation(300,100);
         firstPanel.getSize(sizePanel);
         testPanel.setSize(sizePanel);
-        firstPanel.setVisible(false);
-        testPanel.setVisible(true);
+        firstPanel.setVisible(true);
+        testPanel.setVisible(false);
         lastPanel.setVisible(false);
         add(firstPanel);
         add(testPanel);
