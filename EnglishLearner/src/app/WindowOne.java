@@ -27,9 +27,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import extend.Teacher;
 import extend.testModule.*;
 
-/**
- * 
- */
 
 /**
  * @author Ozzy
@@ -74,6 +71,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	private FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", ".txt");
 	public static String u;
 	Teacher tea;
+	Tester testWin;
 	/**
 	 * 
 	 */
@@ -314,13 +312,12 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 
 			tea = new Teacher();
 			tea.u = WindowOne.u;
-			
 			this.dispose();
 		}
 
 		if (source == startTest) {
-			Tester test = new Tester();
-			this.dispose();
+//			testWin = new Tester();
+//			this.dispose();
 		}
 
 		if (source == create) {
