@@ -37,12 +37,18 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
     private final Dimension sizePanel = new Dimension(500 , 500);
     
     /**
-     * Button for close test module;
+     * Button for close test module from first welcome panel.
      */
     public static JButton exitBtn = new JButton("EXIT");
+    
     /**
-     * 
+     * BUtton for close test module from finished panel.
      */
+    public static JButton exitFinalBtn = new JButton("EXIT");
+    /**
+     * Button for starting test module.
+     */
+    public static JButton startBtn = new JButton("START");
     
     /**
      * Creates new form Tester
@@ -71,10 +77,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
         
         pack();
         initComponents();
-        //naprawić uchwyt za guzik w panelu
-        //this.addComponentListener((ComponentListener) firstPanel.btnExit.getActionListeners());
-    	
-        
+
     }
 
     /**
@@ -86,9 +89,11 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 40));
         exitBtn.addActionListener(this);
+        startBtn.addActionListener(this);
+        exitFinalBtn.addActionListener(this);
         setVisible(true);
         
 
@@ -98,11 +103,18 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource() == exitBtn) {
-			System.out.println("button EXIT pressed.");
+		if(e.getSource() == startBtn) {
+			firstPanel.setVisible(false);
+			testPanel.setVisible(true);
+			
+		}
+		if(e.getSource() == exitBtn || e.getSource() == exitFinalBtn) {
+		System.out.println("button EXIT pressed.");
 		WindowOne win = new WindowOne(u);
 		win.setVisible(true);
 		this.dispose();
 		}
+		
+		
 	}
 }

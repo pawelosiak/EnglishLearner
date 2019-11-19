@@ -27,6 +27,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import extend.Teacher;
 import extend.testModule.*;
 
+import javax.swing.SwingConstants;
+
+
 
 /**
  * @author Ozzy
@@ -41,7 +44,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	private JCheckBox nauka = new JCheckBox("Learn", false);
 	private JCheckBox test = new JCheckBox("Test - disabled", false);
 	private JCheckBox tworzenie = new JCheckBox("Add test/lern file", false);
-	private JCheckBox dodanie = new JCheckBox("Add item to test/lern file", false);
+	private JCheckBox dodanie = new JCheckBox("Add words to test/lern file", false);
 	private Dimension rozmiar = new Dimension(640, 280);
 	private JPanel boxy = new JPanel();
 	private JPanel guziki = new JPanel();
@@ -79,6 +82,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	 * 
 	 */
 	public ActionListener listener;
+	
 
 	private boolean gotWordP(String w) {
 		boolean get = false;
@@ -233,16 +237,19 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	 */
 	public WindowOne(String user) {
 		this.u = user;
-		setResizable(true);
+		setResizable(false);
 		setTitle("English Learner v 0.1");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(rozmiar);
 		setLocation(200, 100);
-
 		test.setForeground(Color.RED);
+		nauka.setHorizontalAlignment(SwingConstants.LEFT);
+		nauka.setToolTipText("Otwórz tryb nauki. Wybierz plik, z którego chcesz się uczyć.");
 		nauka.addItemListener(this);
-		//test.addItemListener(this);
+		test.addItemListener(this);
+		tworzenie.setToolTipText("Utwórz plik, którego będziesz używać w trybie nauki i testu.");
 		tworzenie.addItemListener(this);
+		dodanie.setToolTipText("Dodaj nowe słówka do już istniejącego pliku.");
 		dodanie.addItemListener(this);
 
 		startLearn.addActionListener(this);
@@ -250,9 +257,15 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		create.addActionListener(this);
 		add.addActionListener(this);
 		exit.addActionListener(this);
+		zak.setToolTipText("Zakończ tworzenie pliku.");
 		zak.addActionListener(this);
+		
+		dod.setToolTipText("Dodaj słówka do pliku.");
 		dod.addActionListener(this);
+		
+		dodE.setToolTipText("Dodaj słówka do pliku.");
 		dodE.addActionListener(this);
+		zakE.setToolTipText("Zakończ edycję pliku.");
 		zakE.addActionListener(this);
 		startLearn.setEnabled(false);
 		startTest.setEnabled(false);
@@ -302,13 +315,14 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		all.add(wprowadzanie);
 		all.add(wprowadzanie1);
 
-		add(all);
+		getContentPane().add(all);
 
 		pack();
 		setVisible(true);
 
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

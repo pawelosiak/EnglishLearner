@@ -69,17 +69,6 @@ public class StartPanel extends javax.swing.JPanel implements ItemListener{
         levelIntermidiate.addItemListener(this);
         levelExpert.addItemListener(this);
         
-        startBtn.setText("START");
-        startBtn.addActionListener(new ActionListener () {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}
-        	
-        });
-        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -102,7 +91,7 @@ public class StartPanel extends javax.swing.JPanel implements ItemListener{
         						.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 353, GroupLayout.PREFERRED_SIZE)))
         				.addGroup(layout.createSequentialGroup()
         					.addGap(143)
-        					.addComponent(startBtn)
+        					.addComponent(Tester.startBtn)
         					.addGap(50)
         					.addComponent(Tester.exitBtn)))
         			.addContainerGap(48, Short.MAX_VALUE))
@@ -121,7 +110,7 @@ public class StartPanel extends javax.swing.JPanel implements ItemListener{
         				.addComponent(levelExpert))
         			.addGap(61)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(startBtn)
+        				.addComponent(Tester.startBtn)
         				.addComponent(Tester.exitBtn))
         			.addContainerGap(63, Short.MAX_VALUE))
         );

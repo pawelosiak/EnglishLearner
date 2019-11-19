@@ -30,7 +30,7 @@ public class FinishPanel extends javax.swing.JPanel {
         endMessageCenter = new javax.swing.JLabel();
         endMessageDown = new javax.swing.JLabel();
         repeatBtn = new javax.swing.JButton();
-        exitBtn = new javax.swing.JButton();
+        
 
         endMessageup.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         endMessageup.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -54,7 +54,7 @@ public class FinishPanel extends javax.swing.JPanel {
             }
         });
 
-        exitBtn.setText("EXIT");
+        
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -71,7 +71,7 @@ public class FinishPanel extends javax.swing.JPanel {
                 .addGap(65, 65, 65)
                 .addComponent(repeatBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(exitBtn)
+                .addComponent(Tester.exitFinalBtn)
                 .addGap(96, 96, 96))
         );
         layout.setVerticalGroup(
@@ -86,7 +86,7 @@ public class FinishPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(repeatBtn)
-                    .addComponent(exitBtn))
+                    .addComponent(Tester.exitFinalBtn))
                 .addGap(42, 42, 42))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -100,7 +100,7 @@ public class FinishPanel extends javax.swing.JPanel {
     private javax.swing.JLabel endMessageCenter;
     private javax.swing.JLabel endMessageDown;
     private javax.swing.JLabel endMessageup;
-    private javax.swing.JButton exitBtn;
+   
     private javax.swing.JButton repeatBtn;
     // End of variables declaration//GEN-END:variables
 }
