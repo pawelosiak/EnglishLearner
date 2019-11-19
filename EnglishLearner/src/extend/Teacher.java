@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import app.WindowOne;
 
 public class Teacher extends JFrame implements ActionListener{
 
-	public static String u = AppWindow.u;
+	public String u ;
 	private Dimension rozmiar = new Dimension(640, 200);
 	/**
 	 * This button is running checkAnswear Thread
@@ -48,7 +49,7 @@ public class Teacher extends JFrame implements ActionListener{
 	/**
 	 * Label for good ansear.
 	 */
-	public static JLabel decisionGood = new JLabel("Well done! " + u);
+	public static JLabel decisionGood;
 	/**
 	 * Label for bad answear.
 	 */
@@ -64,7 +65,7 @@ public class Teacher extends JFrame implements ActionListener{
 	private Color color = new Color(15,101,9);
 	private WindowOne win;
 	private JFileChooser fc;
-	private File defined = new File("EnglishLearner/"+u);
+	private File defined ;
 	private String wiersz = null;
 	private List<String> words = new ArrayList<String>();
 	private LearningProcessor proc;
@@ -76,34 +77,30 @@ public class Teacher extends JFrame implements ActionListener{
 
 		fc = new JFileChooser(defined);
 		System.out.println(defined.getAbsolutePath());
-
+		
+		
 		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 
-			
-			File plik1 = fc.getSelectedFile();
-			
 			int i=0;
-			
-			try {
-
-				br = new BufferedReader(new FileReader(plik1));
-				
+			File plik1 = fc.getSelectedFile();
 				//pobieranie zawartości pliku do ArrayList
-				while((wiersz=br.readLine()) != null) {
-	
+				try {
+					br = new BufferedReader(new FileReader(plik1));
+					while((wiersz=br.readLine()) != null) {
+
+						
+					System.out.println("Pobieranie zawartości pliku do listy. " + i);
 					
-				System.out.println("Pobieranie zawartości pliku do listy. " + i);
-				
-				String prep = replace((wiersz.trim()));
-				words.add(prep);
-					i++;
-					
+					String prep = replace((wiersz.trim()));
+					words.add(prep);
+						i++;
+						
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
 
 			String plik = new String(fc.getSelectedFile().toString());
 			System.out.println(plik);
@@ -112,13 +109,8 @@ public class Teacher extends JFrame implements ActionListener{
 		}
 
 		else {
-			try {
-				br.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			win = new WindowOne();
+			
+			win = new WindowOne(u);
 			win.setVisible(true);
 			this.dispose();
 
@@ -129,8 +121,11 @@ public class Teacher extends JFrame implements ActionListener{
 	/**
 	 * 
 	 */
-	public Teacher() {
+	public Teacher(String user) {
 
+		this.u = user;
+		defined = new File("EnglishLearner/"+u);
+		decisionGood = new JLabel("Well done! " + u);
 		setResizable(false);
 		setTitle("English Learner v 0.1");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -278,7 +273,7 @@ public class Teacher extends JFrame implements ActionListener{
 			
 			words.clear();
 			proc.clear();
-			WindowOne a = new WindowOne();
+			WindowOne a = new WindowOne(u);
 			a.setVisible(true);
 			this.dispose();
 			System.out.println(answearThread.isAlive()+" "+questionThread.isAlive());

@@ -3,25 +3,56 @@ package extend.testModule;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.event.AncestorListener;
+
+import app.WindowOne;
 
 /**
  *
  * @author pawel
  */
-public class Tester extends javax.swing.JFrame {
+public class Tester extends javax.swing.JFrame implements ActionListener{
 
-    StartPanel firstPanel = new StartPanel();
+    
+    /**
+     * 
+     */
+    public static ActionListener listener;
+	/**
+     * 
+     */
+    public String u;
+	StartPanel firstPanel ;
     TestPanel testPanel = new TestPanel();
     FinishPanel lastPanel = new FinishPanel();
     private final int width =600;
     private final int height = 400;
     private final Dimension sizeFrame = new Dimension(width, height);
     private final Dimension sizePanel = new Dimension(500 , 500);
+    
+    /**
+     * Button for close test module;
+     */
+    public static JButton exitBtn = new JButton("EXIT");
+    /**
+     * 
+     */
+    
     /**
      * Creates new form Tester
+     * @param user 
      */
-    public Tester() {
+    public Tester(String user) {
         
+    	this.u = user;
+    	
+    	firstPanel = new StartPanel(u);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setPreferredSize(sizeFrame);
         setResizable(false);
@@ -31,14 +62,18 @@ public class Tester extends javax.swing.JFrame {
         firstPanel.setVisible(true);
         testPanel.setVisible(false);
         lastPanel.setVisible(false);
-        add(firstPanel);
-        add(testPanel);
-        add(lastPanel);
+        this.add(firstPanel);
+        this.add(testPanel);
+        this.add(lastPanel);
+        
         
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         pack();
         initComponents();
+        //naprawić uchwyt za guzik w panelu
+        //this.addComponentListener((ComponentListener) firstPanel.btnExit.getActionListeners());
+    	
         
     }
 
@@ -51,10 +86,23 @@ public class Tester extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 40));
+        exitBtn.addActionListener(this);
         setVisible(true);
+        
 
         pack();
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == exitBtn) {
+			System.out.println("button EXIT pressed.");
+		WindowOne win = new WindowOne(u);
+		win.setVisible(true);
+		this.dispose();
+		}
+	}
 }

@@ -146,15 +146,15 @@ public class AppWindow extends JFrame implements ActionListener {
 			try {
 				Files.createDirectory(Paths.get("EnglishLearner/" + u));
 				
-				kol1 = new WindowOne();
-				WindowOne.u = u;
+				kol1 = new WindowOne(u);
+				kol1.u = u;
 				kol1.setVisible(true);
 				kol1.listener = listener;
 				this.dispose();
 
 			} catch (Exception e) {
 
-				kol1 = new WindowOne();
+				kol1 = new WindowOne(u);
 
 //				message.setText(e.toString());
 //				alert.setVisible(true);
@@ -165,7 +165,7 @@ public class AppWindow extends JFrame implements ActionListener {
 //				alert.setAlwaysOnTop(true);
 
 				kol1.setEnabled(true);
-				WindowOne.u = u;
+				kol1.u = u;
 				kol1.setVisible(true);
 				kol1.listener = listener;
 				this.dispose();

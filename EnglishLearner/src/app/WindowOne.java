@@ -69,7 +69,10 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	private Scanner sc, sc1, sc2;
 	private JFileChooser fc;
 	private FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", ".txt");
-	public static String u;
+	/**
+	 * 
+	 */
+	public String u;
 	Teacher tea;
 	Tester testWin;
 	/**
@@ -225,10 +228,11 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	}
 
 	/**
+	 * @param user 
 	 * 
 	 */
-	public WindowOne() {
-
+	public WindowOne(String user) {
+		this.u = user;
 		setResizable(true);
 		setTitle("English Learner v 0.1");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -312,13 +316,15 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 
 		if (source == startLearn) {
 
-			tea = new Teacher();
-			tea.u = WindowOne.u;
+			tea = new Teacher(u);
 			this.dispose();
 		}
 
 		if (source == startTest) {
 
+			testWin = new Tester(u);
+			testWin.setVisible(true);
+			this.dispose();
 		}
 
 		if (source == create) {
