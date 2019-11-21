@@ -59,7 +59,8 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
     	this.u = user;
     	
     	firstPanel = new StartPanel(u);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    	
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setPreferredSize(sizeFrame);
         setResizable(false);
         this.setLocation(300,100);

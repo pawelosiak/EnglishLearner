@@ -7,5 +7,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="EnglishLearner"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/pawel/Desktop/spellchecker do javy/JOrtho_1.0/jortho.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

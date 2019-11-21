@@ -24,6 +24,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.inet.jortho.FileUserDictionary;
+import com.inet.jortho.SpellChecker;
+
 import extend.Teacher;
 import extend.testModule.*;
 
@@ -84,6 +87,15 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	public ActionListener listener;
 	
 
+private void initialiseSpellChecker() {
+		
+		String userDictionaryPath = "/dictionary/";
+		SpellChecker.setUserDictionaryProvider(new FileUserDictionary(userDictionaryPath));
+		SpellChecker.registerDictionaries(getClass().getResource(userDictionaryPath), "en");
+		
+		SpellChecker.register(angielski);
+		SpellChecker.register(angielskiE);
+	}
 	private boolean gotWordP(String w) {
 		boolean get = false;
 		if (w != null) {
@@ -242,6 +254,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(rozmiar);
 		setLocation(200, 100);
+		
+		initialiseSpellChecker();
 		test.setForeground(Color.RED);
 		nauka.setHorizontalAlignment(SwingConstants.LEFT);
 		nauka.setToolTipText("Otwórz tryb nauki. Wybierz plik, z którego chcesz się uczyć.");
