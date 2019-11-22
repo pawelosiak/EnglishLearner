@@ -29,7 +29,7 @@ public class FinishPanel extends javax.swing.JPanel {
         endMessageup = new javax.swing.JLabel();
         endMessageCenter = new javax.swing.JLabel();
         endMessageDown = new javax.swing.JLabel();
-        repeatBtn = new javax.swing.JButton();
+        raportBtn = new javax.swing.JButton();
         
 
         endMessageup.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
@@ -47,8 +47,8 @@ public class FinishPanel extends javax.swing.JPanel {
         endMessageDown.setText("Run test again or come back to learning mode for increase your skill");
         endMessageDown.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        repeatBtn.setText("RUN AGAIN?");
-        repeatBtn.addActionListener(new java.awt.event.ActionListener() {
+        raportBtn.setText("CREATE RAPORT?");
+        raportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 repeatBtnActionPerformed(evt);
             }
@@ -69,7 +69,7 @@ public class FinishPanel extends javax.swing.JPanel {
                 .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addComponent(repeatBtn)
+                .addComponent(raportBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Tester.exitFinalBtn)
                 .addGap(96, 96, 96))
@@ -85,7 +85,7 @@ public class FinishPanel extends javax.swing.JPanel {
                 .addComponent(endMessageDown)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(repeatBtn)
+                    .addComponent(raportBtn)
                     .addComponent(Tester.exitFinalBtn))
                 .addGap(42, 42, 42))
         );
@@ -101,6 +101,6 @@ public class FinishPanel extends javax.swing.JPanel {
     private javax.swing.JLabel endMessageDown;
     private javax.swing.JLabel endMessageup;
    
-    private javax.swing.JButton repeatBtn;
+    private javax.swing.JButton raportBtn;
     // End of variables declaration//GEN-END:variables
 }

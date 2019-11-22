@@ -127,7 +127,10 @@ public class StartPanel extends javax.swing.JPanel implements ItemListener{
     private javax.swing.JCheckBox levelIntermidiate;
     private javax.swing.JButton startBtn;
     private javax.swing.JLabel welcomeLabel;
-    private String level;
+    /**
+     * 
+     */
+    public String level;
     /**
      * Variable for user name data;
      */

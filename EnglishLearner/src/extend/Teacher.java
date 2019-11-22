@@ -70,9 +70,7 @@ public class Teacher extends JFrame implements ActionListener{
 	private List<String> words = new ArrayList<String>();
 	private LearningProcessor proc;
 	private BufferedReader br;
-	
-	
-	
+
 	private void open() {
 
 		fc = new JFileChooser(defined);
@@ -101,7 +99,6 @@ public class Teacher extends JFrame implements ActionListener{
 					e.printStackTrace();
 				}
 
-
 			String plik = new String(fc.getSelectedFile().toString());
 			System.out.println(plik);
 			System.out.println(words.toString());
@@ -119,6 +116,8 @@ public class Teacher extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * Constructor with parameter String user.
+	 * @param user 
 	 * 
 	 */
 	public Teacher(String user) {
@@ -134,7 +133,6 @@ public class Teacher extends JFrame implements ActionListener{
 		
 		check.addActionListener(this);
 		exit.addActionListener(this);
-		
 		
 		decisionGood.setForeground(color);
 		decisionGood.setOpaque(isOpaque());
@@ -164,7 +162,6 @@ public class Teacher extends JFrame implements ActionListener{
 		
 		buttonPanel.add(check);
 		buttonPanel.add(exit);
-		
 
 		add(positionPanel);
 		add(decisionPanel);
@@ -190,24 +187,13 @@ public class Teacher extends JFrame implements ActionListener{
 				try {
 					proc.selectWord();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			
 		}
 	});
 
-//	
-//	
-//	
-//	Thread clear = new Thread(new Runnable() {
-//		
-//		public void run() {
-//			
-//			decisionGood.setVisible(false);
-//			decisionBad.setVisible(false);
-//		}
-//	});
 /**
  * Function to secure delete polish letters from any imported to list words from file. Accept String parameter.
  * @param w
@@ -260,13 +246,10 @@ public class Teacher extends JFrame implements ActionListener{
 				
 				e1.printStackTrace();
 			}finally {
-			
-				
+	
 				proc.nextWord();
 				answear.setText("");
 			}
-			
-				
 
 		}
 		if (source == exit) {

@@ -351,7 +351,6 @@ private void initialiseSpellChecker() {
 		if (source == startTest) {
 
 			testWin = new Tester(u);
-			testWin.setVisible(true);
 			this.dispose();
 		}
 

@@ -1,19 +1,52 @@
 package extend.testModule;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.Timer;
+
 /**
  *
  * @author pawel
  */
-public class TestPanel extends javax.swing.JPanel {
+public class TestPanel extends javax.swing.JPanel implements ActionListener{
 
     /**
      * Creates new form TestPanel
+     * @param words 
+     * @param level 
      */
-    public TestPanel() {
+    public TestPanel(List<String>words, String level) {
         this.setVisible(true);
         
+        this.difficult = level;
+        System.out.println(words.size());
+       
         initComponents();
-        
+        int delayBegginer = 180000;
+    	int delayIntermediate = 120000;
+    	int delayExpert = 60000;
+    	
+    	timerBeggin = new Timer(delayBegginer, this);
+    	timerIntermediate = new Timer(delayIntermediate, this);
+    	timerExpert = new Timer(delayExpert, this);
+    	
+        if(difficult.equals("begginer")) {
+        	int timeBeggin = delayBegginer*(words.size()/2);
+        	timerLabel.setText("Time to end: "+(timeBeggin/1000)/60);
+        	System.out.println(timeBeggin);
+        }
+        else if(difficult.equals("intermidiate")) {
+        	int timeInterm = delayIntermediate*(words.size()/2);
+        	timerLabel.setText("Time to end: "+(timeInterm/1000)/60);
+        	System.out.println(timeInterm);
+        }
+        else if(difficult.equals("expert")) {
+        	int timeExpert = delayExpert*(words.size()/2);
+        	timerLabel.setText("Time to end: "+(timeExpert/1000)/60);
+        	System.out.println(timeExpert);
+        }
     }
 
     /**
@@ -33,6 +66,7 @@ public class TestPanel extends javax.swing.JPanel {
         wordsCountLabel = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
+        
         questionLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         questionLabel.setText("question text");
 
@@ -43,15 +77,11 @@ public class TestPanel extends javax.swing.JPanel {
         decisionLabel.setText("decision good or bad");
 
         checkBtn.setText("CHECK");
-        checkBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkBtnActionPerformed(evt);
-            }
-        });
+        checkBtn.addActionListener(this);
 
         timerLabel.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         timerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        timerLabel.setText("Time to end:");
+        
 
         wordsCountLabel.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         wordsCountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -105,9 +135,11 @@ public class TestPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void checkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkBtnActionPerformed
+    @Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -118,5 +150,11 @@ public class TestPanel extends javax.swing.JPanel {
     private javax.swing.JLabel timerLabel;
     private javax.swing.JTextField userAnswear;
     private javax.swing.JLabel wordsCountLabel;
+    
+    private Timer timerBeggin;
+    private Timer timerIntermediate;
+    private Timer timerExpert;
+    private String difficult;
     // End of variables declaration//GEN-END:variables
+	
 }
