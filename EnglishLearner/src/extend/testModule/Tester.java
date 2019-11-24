@@ -34,8 +34,14 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
      */
     public String u;
 	StartPanel firstPanel ;
-    TestPanel testPanel ;
-    FinishPanel lastPanel = new FinishPanel();
+    /**
+     * 
+     */
+    public static TestPanel testPanel ;
+    /**
+     * 
+     */
+    public static FinishPanel lastPanel;
     private final int width =600;
     private final int height = 400;
     private final Dimension sizeFrame = new Dimension(width, height);
@@ -81,9 +87,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
         firstPanel = new StartPanel(u);
         firstPanel.getSize(sizePanel);
         firstPanel.setVisible(true);
-        lastPanel.setVisible(false);
         this.add(firstPanel);
-        this.add(lastPanel);
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         pack();
@@ -107,6 +111,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
         exitBtn.addActionListener(this);
         startBtn.addActionListener(this);
         exitFinalBtn.addActionListener(this);
+        lastPanel = new FinishPanel();
         setVisible(false);
         pack();
     }
@@ -175,6 +180,11 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 			testPanel.setSize(sizePanel);
 			this.add(testPanel);
 			testPanel.setVisible(true);
+			if(TestPanel.end) {
+				testPanel.setVisible(false);
+				this.add(lastPanel);
+				lastPanel.setVisible(true);
+			}
 			
 		}
 		if(e.getSource() == exitBtn || e.getSource() == exitFinalBtn) {

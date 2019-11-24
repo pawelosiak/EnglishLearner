@@ -18,12 +18,12 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
      * @param level 
      */
     public TestPanel(List<String>words, String level) {
-        this.setVisible(true);
         
+        end=false;
         this.difficult = level;
         System.out.println(words.size());
        
-        initComponents();
+        
         int delayBegginer = 180000;
     	int delayIntermediate = 120000;
     	int delayExpert = 60000;
@@ -33,20 +33,92 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
     	timerExpert = new Timer(delayExpert, this);
     	
         if(difficult.equals("begginer")) {
-        	int timeBeggin = delayBegginer*(words.size()/2);
-        	timerLabel.setText("Time to end: "+(timeBeggin/1000)/60);
-        	System.out.println(timeBeggin);
+        	minutes = delayBegginer*(words.size()/2);
+        	minutes=(minutes/1000)/60;
+        	System.out.println(minutes);
         }
         else if(difficult.equals("intermidiate")) {
-        	int timeInterm = delayIntermediate*(words.size()/2);
-        	timerLabel.setText("Time to end: "+(timeInterm/1000)/60);
-        	System.out.println(timeInterm);
+        	 minutes = delayIntermediate*(words.size()/2);
+        	minutes=(minutes/1000)/60;
+        	System.out.println(minutes);
         }
         else if(difficult.equals("expert")) {
-        	int timeExpert = delayExpert*(words.size()/2);
-        	timerLabel.setText("Time to end: "+(timeExpert/1000)/60);
-        	System.out.println(timeExpert);
+        	minutes = delayExpert*(words.size()/2);
+        	minutes=(minutes/1000)/60;
+        	System.out.println(minutes);
         }
+        
+        timeAll = new Timer(1000, new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				if(seconds == 0 && minutes>0) {
+					seconds=60;
+					
+					if(minutes<10) {
+						timerLabel.setText("Time to end: 0"+String.valueOf(minutes)+":00");
+					}
+					else if(minutes>=10) {
+						timerLabel.setText("Time to end: "+String.valueOf(minutes)+":00");
+					}
+					minutes--;
+				}else if(seconds < 60) {
+					if(minutes<10 || seconds<10) {
+						if(seconds<10) {
+							timerLabel.setText("Time to end: "+String.valueOf(minutes)+":0"+String.valueOf(seconds));
+						}else if(minutes<10 && seconds>=10 ) {
+							timerLabel.setText("Time to end: 0"+String.valueOf(minutes)+":"+String.valueOf(seconds));
+						}
+						
+					}
+					
+					else if(minutes>=10) {
+						timerLabel.setText("Time to end: "+String.valueOf(minutes)+":"+String.valueOf(seconds));
+					}
+					
+					}
+				else if(seconds < 10) {
+					if(minutes<10) {
+						timerLabel.setText("Time to end: 0"+String.valueOf(minutes)+":0"+String.valueOf(seconds));
+					}
+					else if(minutes>=10) {
+						timerLabel.setText("Time to end: "+String.valueOf(minutes)+":0"+String.valueOf(seconds));
+					}
+					
+					}
+				
+				seconds--;
+				if(seconds==0 && minutes!=0) {
+					minutes--;
+					if(minutes<10) {
+						timerLabel.setText("Time to end: 0"+String.valueOf(minutes)+":00");
+					}
+					
+					seconds=60;
+					
+				}
+				if(minutes==0 && seconds==0) {
+					timeAll.stop();
+					timerLabel.setText("Test time is end.");
+					try {
+						Thread.sleep(100);
+						end = true;
+						
+						
+						
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			
+		});
+        timeAll.start();
+        initComponents();
+        
     }
 
     /**
@@ -81,7 +153,8 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
 
         timerLabel.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         timerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        
+        timerLabel.setText("Time to end:");
+        timerLabel.setVisible(true);
 
         wordsCountLabel.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         wordsCountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -154,7 +227,14 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
     private Timer timerBeggin;
     private Timer timerIntermediate;
     private Timer timerExpert;
+    private int minutes;
+    private int seconds=0;
+    private Timer timeAll;
     private String difficult;
+    /**
+     * 
+     */
+    public static boolean end;
     // End of variables declaration//GEN-END:variables
 	
 }
