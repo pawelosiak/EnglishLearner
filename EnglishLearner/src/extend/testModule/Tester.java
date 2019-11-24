@@ -38,10 +38,11 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
      * 
      */
     public static TestPanel testPanel ;
+    public static FinishPanel lastPanel;
     /**
      * 
      */
-    public static FinishPanel lastPanel;
+    
     private final int width =600;
     private final int height = 400;
     private final Dimension sizeFrame = new Dimension(width, height);
@@ -106,12 +107,11 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 40));
         exitBtn.addActionListener(this);
         startBtn.addActionListener(this);
         exitFinalBtn.addActionListener(this);
-        lastPanel = new FinishPanel();
         setVisible(false);
         pack();
     }
@@ -180,11 +180,11 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 			testPanel.setSize(sizePanel);
 			this.add(testPanel);
 			testPanel.setVisible(true);
-			if(TestPanel.end) {
-				testPanel.setVisible(false);
-				this.add(lastPanel);
-				lastPanel.setVisible(true);
-			}
+			lastPanel = new FinishPanel();
+			lastPanel.setSize(sizePanel);
+			this.add(lastPanel);
+			lastPanel.setVisible(false);
+			
 			
 		}
 		if(e.getSource() == exitBtn || e.getSource() == exitFinalBtn) {

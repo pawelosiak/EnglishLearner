@@ -1,16 +1,19 @@
 package extend.testModule;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
 /**
  *
  * @author pawel
  */
-public class TestPanel extends javax.swing.JPanel implements ActionListener{
+public class TestPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form TestPanel
@@ -21,38 +24,62 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
         
         end=false;
         this.difficult = level;
-        System.out.println(words.size());
+        this.data = words;
        
+        System.out.println(data.size());
         
+
         int delayBegginer = 180000;
     	int delayIntermediate = 120000;
     	int delayExpert = 60000;
     	
-    	timerBeggin = new Timer(delayBegginer, this);
-    	timerIntermediate = new Timer(delayIntermediate, this);
-    	timerExpert = new Timer(delayExpert, this);
+    	timerBeggin = new Timer(delayBegginer, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}});
+    	timerIntermediate = new Timer(delayIntermediate, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}});
+    	timerExpert = new Timer(delayExpert, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}});
     	
         if(difficult.equals("begginer")) {
-        	minutes = delayBegginer*(words.size()/2);
+        	minutes = delayBegginer*(data.size()/2);
         	minutes=(minutes/1000)/60;
+        	
         	System.out.println(minutes);
         }
         else if(difficult.equals("intermidiate")) {
-        	 minutes = delayIntermediate*(words.size()/2);
+        	 minutes = delayIntermediate*(data.size()/2);
         	minutes=(minutes/1000)/60;
+        	
         	System.out.println(minutes);
         }
         else if(difficult.equals("expert")) {
-        	minutes = delayExpert*(words.size()/2);
+        	minutes = delayExpert*(data.size()/2);
         	minutes=(minutes/1000)/60;
+        	
         	System.out.println(minutes);
         }
         
+        initComponents();
+        wordsCountLabel.setText("Questions to end:  "+data.size()/2);
         timeAll = new Timer(1000, new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+
 				if(seconds == 0 && minutes>0) {
 					seconds=60;
 					
@@ -101,23 +128,23 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
 				if(minutes==0 && seconds==0) {
 					timeAll.stop();
 					timerLabel.setText("Test time is end.");
-					try {
-						Thread.sleep(100);
-						end = true;
-						
-						
-						
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					end = true;
+					masterTask.done();
+
+					
 				}
 				
 			}
 			
 		});
-        timeAll.start();
-        initComponents();
+       
+      
+      try {
+		masterTask.doInBackground();
+	} catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
         
     }
 
@@ -149,7 +176,17 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
         decisionLabel.setText("decision good or bad");
 
         checkBtn.setText("CHECK");
-        checkBtn.addActionListener(this);
+        checkBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(!end) {
+					
+				}
+				
+			}
+        	
+        });
 
         timerLabel.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         timerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -208,13 +245,6 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    @Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton checkBtn;
     private javax.swing.JLabel decisionLabel;
@@ -223,7 +253,7 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
     private javax.swing.JLabel timerLabel;
     private javax.swing.JTextField userAnswear;
     private javax.swing.JLabel wordsCountLabel;
-    
+    private List<String> data = new ArrayList<String>();
     private Timer timerBeggin;
     private Timer timerIntermediate;
     private Timer timerExpert;
@@ -231,10 +261,32 @@ public class TestPanel extends javax.swing.JPanel implements ActionListener{
     private int seconds=0;
     private Timer timeAll;
     private String difficult;
+    private MasterTask masterTask = new MasterTask();
+    
+    
     /**
-     * 
+     * Boolean value for ending test with time interval or data count.
      */
-    public static boolean end;
+    private boolean end;
     // End of variables declaration//GEN-END:variables
+    
+    class MasterTask extends SwingWorker<Void, Void>{
+
+		@Override
+		protected Void doInBackground() throws Exception {
+			timeAll.start();
+			
+			return null;
+		}
+
+		@Override
+		protected void done() {
+			if(end) {
+			Tester.testPanel.setVisible(false);
+			Tester.lastPanel.setVisible(true);
+			}
+		}
+    	
+    }
 	
 }
