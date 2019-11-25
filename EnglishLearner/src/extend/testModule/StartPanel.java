@@ -1,14 +1,10 @@
 package extend.testModule;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 
 /**
  *
@@ -40,7 +36,7 @@ public class StartPanel extends javax.swing.JPanel implements ItemListener{
 
     	System.out.println(this.getParent());
         welcomeLabel = new javax.swing.JLabel();
-        startBtn = new javax.swing.JButton();
+        
         jLabel1 = new javax.swing.JLabel();
         levelBegginer = new javax.swing.JCheckBox();
         levelIntermidiate = new javax.swing.JCheckBox();
@@ -125,7 +121,6 @@ public class StartPanel extends javax.swing.JPanel implements ItemListener{
     private javax.swing.JCheckBox levelBegginer;
     private javax.swing.JCheckBox levelExpert;
     private javax.swing.JCheckBox levelIntermidiate;
-    private javax.swing.JButton startBtn;
     private javax.swing.JLabel welcomeLabel;
     /**
      * 

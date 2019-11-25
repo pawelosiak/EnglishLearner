@@ -1,6 +1,5 @@
 package extend.testModule;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,36 +24,10 @@ public class TestPanel extends javax.swing.JPanel {
         end=false;
         this.difficult = level;
         this.data = words;
+        counterWords = (words.size()/2)-1;
        
         System.out.println(data.size());
-        
 
-        int delayBegginer = 180000;
-    	int delayIntermediate = 120000;
-    	int delayExpert = 60000;
-    	
-    	timerBeggin = new Timer(delayBegginer, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}});
-    	timerIntermediate = new Timer(delayIntermediate, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}});
-    	timerExpert = new Timer(delayExpert, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}});
-    	
         if(difficult.equals("begginer")) {
         	minutes = delayBegginer*(data.size()/2);
         	minutes=(minutes/1000)/60;
@@ -75,7 +48,7 @@ public class TestPanel extends javax.swing.JPanel {
         }
         
         initComponents();
-        wordsCountLabel.setText("Questions to end:  "+data.size()/2);
+        
         timeAll = new Timer(1000, new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -93,7 +66,7 @@ public class TestPanel extends javax.swing.JPanel {
 				}else if(seconds < 60) {
 					if(minutes<10 || seconds<10) {
 						if(seconds<10) {
-							timerLabel.setText("Time to end: "+String.valueOf(minutes)+":0"+String.valueOf(seconds));
+							timerLabel.setText("Time to end: 0"+String.valueOf(minutes)+":0"+String.valueOf(seconds));
 						}else if(minutes<10 && seconds>=10 ) {
 							timerLabel.setText("Time to end: 0"+String.valueOf(minutes)+":"+String.valueOf(seconds));
 						}
@@ -114,35 +87,35 @@ public class TestPanel extends javax.swing.JPanel {
 					}
 					
 					}
-				
+
 				seconds--;
 				if(seconds==0 && minutes!=0) {
 					minutes--;
 					if(minutes<10) {
 						timerLabel.setText("Time to end: 0"+String.valueOf(minutes)+":00");
 					}
-					
+
 					seconds=60;
+					if(minutes==0 && seconds==60) {
+						timerLabel.setText("Time to end: 01:00");
+					}
 					
 				}
 				if(minutes==0 && seconds==0) {
 					timeAll.stop();
-					timerLabel.setText("Test time is end.");
 					end = true;
 					masterTask.done();
 
-					
 				}
 				
 			}
 			
 		});
-       
-      
+
       try {
 		masterTask.doInBackground();
 	} catch (Exception e1) {
-		// TODO Auto-generated catch block
+		
 		e1.printStackTrace();
 	}
         
@@ -180,7 +153,9 @@ public class TestPanel extends javax.swing.JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(!end) {
+				if(!end && counterE<data.size()) {
+					compare();
+					nextWord();
 					
 				}
 				
@@ -195,7 +170,7 @@ public class TestPanel extends javax.swing.JPanel {
 
         wordsCountLabel.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         wordsCountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        wordsCountLabel.setText("Question:  ");
+        wordsCountLabel.setText("Questions to end:  "+counterWords+"/"+data.size()/2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -243,6 +218,8 @@ public class TestPanel extends javax.swing.JPanel {
                 .addComponent(checkBtn)
                 .addContainerGap())
         );
+        
+       
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -254,30 +231,120 @@ public class TestPanel extends javax.swing.JPanel {
     private javax.swing.JTextField userAnswear;
     private javax.swing.JLabel wordsCountLabel;
     private List<String> data = new ArrayList<String>();
-    private Timer timerBeggin;
-    private Timer timerIntermediate;
-    private Timer timerExpert;
     private int minutes;
     private int seconds=0;
     private Timer timeAll;
     private String difficult;
     private MasterTask masterTask = new MasterTask();
-    
-    
+    private final int delayBegginer = 180000;
+    private final int delayIntermediate = 120000;
+    private final int delayExpert = 60000;
+
     /**
      * Boolean value for ending test with time interval or data count.
      */
     private boolean end;
     // End of variables declaration//GEN-END:variables
+   
+    private int counterP=0;
+    private int counterE = 1;
+    private int counterWords ;
+    private Thread question;
+    private Thread equal;
+    private String replace(String w) {
+		  String word = w.replaceAll("ą", "a").replaceAll("Ą", "A").replaceAll("ć", "c").replaceAll("Ć", "C").replaceAll("ę", "e").replaceAll("Ę", "E").replaceAll("ł", "l").replaceAll("Ł", "L").replaceAll("ń", "n").replaceAll("Ń", "N").replaceAll("ó", "o").replaceAll("Ó", "O").replaceAll("ś", "s").replaceAll("Ś", "S").replaceAll("ż", "z").replaceAll("Ż", "Z").replaceAll("ź", "z").replaceAll("Ź", "Z");
+
+		 return word;
+	 }
+    private synchronized void selectWord(String level){
+    	question = new Thread(new Runnable() {
+    		public void run() {
+    			if(counterP<data.size()-1) {
+    	    		questionLabel.setText(data.get(counterP));
+    	    		if(level.equals("begginer")) {
+    	    			try {
+							Thread.sleep(delayBegginer);
+							counterP+=2;
+							nextWord();
+						} catch (InterruptedException e) {
+							
+							e.printStackTrace();
+						}
+    	    		}
+    	    		if(level.equals("Intermidiate")) {
+    	    			try {
+							Thread.sleep(delayIntermediate);
+							counterP+=2;
+							nextWord();
+						} catch (InterruptedException e) {
+							
+							e.printStackTrace();
+						}
+    	    		}
+    	    		if(level.equals("expert")) {
+    	    			try {
+							Thread.sleep(delayExpert);
+							counterP+=2;
+							nextWord();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+    	    		}
+    	    		
+    	    	}
+    		}
+    	});
+    	
+    	question.start();
+    }
+    private synchronized void compare() {
+    	String toCompare = replace(userAnswear.getText());
+    	
+    	
+    	equal = new Thread(new Runnable() {
+    		public void run() {
+    			if(toCompare.equals(data.get(counterE))) {
+    				decisionLabel.setText("goodAnswear");
+    				question.interrupt();
+    				}
+    			else if(!toCompare.equals(data.get(counterE))) {}
+    			
+    			counterE+=2;
+    			
+    		}
+    	});
+    	equal.start();
+    	try {
+			equal.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
+    private synchronized void nextWord() {
+    	if(counterWords>0) {
+    	counterWords-=1;
+    	}
+    	wordsCountLabel.setText("Questions to end:  "+counterWords+"/"+data.size()/2);
+    	selectWord(difficult);
+    	
+    	
+    }
     class MasterTask extends SwingWorker<Void, Void>{
 
 		@Override
 		protected Void doInBackground() throws Exception {
 			timeAll.start();
-			
+			Thread.sleep(1000);
+			selectWord(difficult);
+				
+
 			return null;
 		}
+
+		
 
 		@Override
 		protected void done() {
