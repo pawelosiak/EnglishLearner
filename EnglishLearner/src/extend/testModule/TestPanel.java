@@ -339,7 +339,6 @@ public class TestPanel extends javax.swing.JPanel {
 			timeAll.start();
 			Thread.sleep(1000);
 			selectWord(difficult);
-				
 
 			return null;
 		}
