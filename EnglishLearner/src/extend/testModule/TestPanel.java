@@ -25,7 +25,7 @@ public class TestPanel extends javax.swing.JPanel {
         end=false;
         this.difficult = level;
         this.data = words;
-        counterWords = (words.size()/2)-1;
+        counterWords = (words.size()/2);
         
        
         System.out.println(data.size());
@@ -159,7 +159,9 @@ public class TestPanel extends javax.swing.JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 			String action = checkBtn.getText();
-			if(action.equals("CHECK")) {}
+			if(action.equals("CHECK")) {
+				compareManual();
+			}
 			else if (action.equals("END TEST")) {
 				masterTask.done();
 			}
@@ -244,7 +246,6 @@ public class TestPanel extends javax.swing.JPanel {
     private final int delayBegginer = 180000;
     private final int delayIntermediate = 120000;
     private final int delayExpert = 60000;
-
     /**
      * Boolean value for ending test with time interval or data count.
      */
@@ -256,6 +257,7 @@ public class TestPanel extends javax.swing.JPanel {
     private int counterWords ;
     private Thread question;
     private Thread equal;
+    private Thread equalManual;
     private Thread decisionGood;
     private Thread decisionBad;
     private String replace(String w) {
@@ -357,7 +359,6 @@ public class TestPanel extends javax.swing.JPanel {
     	equal.start();
     	
     }
-    
     private synchronized void nextWord() {
     	if(counterWords>0) {
     	counterWords-=1;
@@ -415,6 +416,66 @@ public class TestPanel extends javax.swing.JPanel {
 
 			}});
     	decisionBad.start();
+    }
+    private synchronized void compareManual() {
+    	equalManual = new Thread(new Runnable() {
+    		String toCompare ;
+    		String comparator;
+    		int counter = counterWords-1;
+    		public void run() {
+    			if(counterE<data.size() && counter > 0) {
+    				comparator = data.get(counterE);
+    			
+    				System.out.println("From list:"+comparator);
+
+	    			try {
+						Thread.sleep(100);
+						toCompare = replace(userAnswear.getText());
+						System.out.println("From user:"+toCompare);
+						if(toCompare.equals(comparator)) {
+		    				good();
+		    				counterE+=2;
+		    				System.out.println(counter);
+		    				}
+		    			else if(!toCompare.equals(comparator)) {
+		    				bad();
+		    				counterE+=2;
+		    				System.out.println(counter);
+		    			}
+						nextWord();
+					} catch (InterruptedException e) {
+						
+						e.printStackTrace();
+					}
+    			}else if(counter == 0) {
+    				try {
+						Thread.sleep(100);
+						toCompare = replace(userAnswear.getText());
+						System.out.println("From user:"+toCompare);
+						if(toCompare.equals(comparator)) {
+		    				good();
+		    				
+		    				System.out.println(counter);
+		    				}
+		    			else if(!toCompare.equals(comparator)) {
+		    				bad();
+		    				
+		    				System.out.println(counter);
+		    			}
+						nextWord();
+					} catch (InterruptedException e) {
+						
+						e.printStackTrace();
+					}
+    				end = true;
+    				checkBtn.setText("END TEST");
+    			}
+	    		
+    		}
+    		
+    	});
+    	equalManual.start();
+    	
     }
     class MasterTask extends SwingWorker<Void, Void>{
 
