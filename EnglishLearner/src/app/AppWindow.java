@@ -67,7 +67,7 @@ public class AppWindow extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setTitle("English Learner v 0.1");
+		setTitle("English Learner v 0.1 -beta version");
 		setPreferredSize(rozmiar);
 		setLocation(200, 100);
 

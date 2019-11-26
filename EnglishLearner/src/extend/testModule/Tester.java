@@ -150,6 +150,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 			System.out.println(plik);
 			System.out.println(words.toString());
 			initComponents();
+			setTitle("English Learner v 0.1 -beta version");
 			this.setVisible(true);
 		}
 

@@ -45,7 +45,7 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	 */
 
 	private JCheckBox nauka = new JCheckBox("Learn", false);
-	private JCheckBox test = new JCheckBox("Test - disabled", false);
+	private JCheckBox test = new JCheckBox("Test - experimental", false);
 	private JCheckBox tworzenie = new JCheckBox("Add test/lern file", false);
 	private JCheckBox dodanie = new JCheckBox("Add words to test/lern file", false);
 	private Dimension rozmiar = new Dimension(640, 280);
@@ -250,7 +250,7 @@ private void initialiseSpellChecker() {
 	public WindowOne(String user) {
 		this.u = user;
 		setResizable(false);
-		setTitle("English Learner v 0.1");
+		setTitle("English Learner v 0.1 -beta version");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(rozmiar);
 		setLocation(200, 100);

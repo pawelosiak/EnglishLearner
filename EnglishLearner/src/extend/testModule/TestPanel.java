@@ -228,7 +228,6 @@ public class TestPanel extends javax.swing.JPanel {
         
        
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton checkBtn;
     private javax.swing.JLabel decisionLabel;
@@ -251,7 +250,6 @@ public class TestPanel extends javax.swing.JPanel {
      */
     private boolean end;
     // End of variables declaration//GEN-END:variables
-   
     private int counterP=0;
     private int counterE = 1;
     private int counterWords ;

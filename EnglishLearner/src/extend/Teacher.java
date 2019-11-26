@@ -126,7 +126,7 @@ public class Teacher extends JFrame implements ActionListener{
 		defined = new File("EnglishLearner/"+u);
 		decisionGood = new JLabel("Well done! " + u);
 		setResizable(false);
-		setTitle("English Learner v 0.1");
+		setTitle("English Learner v 0.1 -beta version");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(rozmiar);
 		setLocation(200, 100);
