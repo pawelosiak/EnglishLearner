@@ -8,13 +8,11 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
-
 /**
  *
  * @author pawel
  */
 public class TestPanel extends javax.swing.JPanel {
-
     /**
      * Creates new form TestPanel
      * @param words 
@@ -108,7 +106,6 @@ public class TestPanel extends javax.swing.JPanel {
 					timerLabel.setText("Time to end: 00:00");
 					timeAll.stop();
 					checkBtn.setText("END TEST");
-					
 
 				}
 				
@@ -124,7 +121,6 @@ public class TestPanel extends javax.swing.JPanel {
 	}
         
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,7 +137,6 @@ public class TestPanel extends javax.swing.JPanel {
         timerLabel = new javax.swing.JLabel();
         wordsCountLabel = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-
         
         questionLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         questionLabel.setText("question text");
@@ -226,7 +221,6 @@ public class TestPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
         
-       
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton checkBtn;
@@ -279,8 +273,6 @@ public class TestPanel extends javax.swing.JPanel {
     	
     }
     private synchronized void compare() {
-    	
-    	
     	equal = new Thread(new Runnable() {
     		String toCompare ;
     		String comparator;
@@ -387,7 +379,6 @@ public class TestPanel extends javax.swing.JPanel {
     	wordsCountLabel.setText("Questions to end:  "+counterWords+"/"+data.size()/2);
     	counterP+=2;
     	selectWord();
-    	
     	
     }
     private synchronized void good() {
@@ -504,10 +495,7 @@ public class TestPanel extends javax.swing.JPanel {
 		@Override
 		protected Void doInBackground() throws Exception {
 			timeAll.start();
-			
 			selectWord();
-			
-
 			return null;
 		}
 
