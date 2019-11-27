@@ -258,6 +258,7 @@ public class TestPanel extends javax.swing.JPanel {
     private Thread equalManual;
     private Thread decisionGood;
     private Thread decisionBad;
+    private int counter;
     private String replace(String w) {
 		  String word = w.replaceAll("ą", "a").replaceAll("Ą", "A").replaceAll("ć", "c").replaceAll("Ć", "C").replaceAll("ę", "e").replaceAll("Ę", "E").replaceAll("ł", "l").replaceAll("Ł", "L").replaceAll("ń", "n").replaceAll("Ń", "N").replaceAll("ó", "o").replaceAll("Ó", "O").replaceAll("ś", "s").replaceAll("Ś", "S").replaceAll("ż", "z").replaceAll("Ż", "Z").replaceAll("ź", "z").replaceAll("Ź", "Z");
 
@@ -284,6 +285,7 @@ public class TestPanel extends javax.swing.JPanel {
     		String toCompare ;
     		String comparator;
     		public void run() {
+    			counter = counterWords-1;
     			if(counterE<data.size()) {
     				comparator = data.get(counterE);
     			if(difficult.equals("begginer")) {
@@ -350,8 +352,29 @@ public class TestPanel extends javax.swing.JPanel {
 						e.printStackTrace();
 					}
 	    		}
-    			}
-    			
+    			}if(counter == 0) {
+    				try {
+						Thread.sleep(100);
+						toCompare = replace(userAnswear.getText());
+						System.out.println("From user:"+toCompare);
+						if(toCompare.equals(comparator)) {
+		    				good();
+		    				
+		    				System.out.println(counter);
+		    				}
+		    			else if(!toCompare.equals(comparator)) {
+		    				bad();
+		    				
+		    				System.out.println(counter);
+		    			}
+						
+					} catch (InterruptedException e) {
+						
+						e.printStackTrace();
+					}
+    				end = true;
+    				checkBtn.setText("END TEST");
+    		}
     		}
     	});
     	equal.start();
@@ -419,8 +442,9 @@ public class TestPanel extends javax.swing.JPanel {
     	equalManual = new Thread(new Runnable() {
     		String toCompare ;
     		String comparator;
-    		int counter = counterWords-1;
+    		
     		public void run() {
+    			counter = counterWords-1;
     			if(counterE<data.size() && counter > 0) {
     				comparator = data.get(counterE);
     			
@@ -460,7 +484,7 @@ public class TestPanel extends javax.swing.JPanel {
 		    				
 		    				System.out.println(counter);
 		    			}
-						nextWord();
+						
 					} catch (InterruptedException e) {
 						
 						e.printStackTrace();

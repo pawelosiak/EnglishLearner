@@ -31,6 +31,7 @@ public class FinishPanel extends javax.swing.JPanel {
         endMessageDown = new javax.swing.JLabel();
         raportBtn = new javax.swing.JButton();
         
+        
 
         endMessageup.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         endMessageup.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -39,7 +40,7 @@ public class FinishPanel extends javax.swing.JPanel {
 
         endMessageCenter.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         endMessageCenter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        endMessageCenter.setText("Your result is : +result, so is +message type of result");
+        endMessageCenter.setText("Your result is : +result, so it's +message type of result");
         endMessageCenter.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         endMessageDown.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
@@ -48,6 +49,7 @@ public class FinishPanel extends javax.swing.JPanel {
         endMessageDown.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         raportBtn.setText("CREATE RAPORT?");
+        raportBtn.setEnabled(false);
         raportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 repeatBtnActionPerformed(evt);
