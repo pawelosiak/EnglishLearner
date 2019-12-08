@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,15 +24,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.inet.jortho.FileUserDictionary;
 import com.inet.jortho.SpellChecker;
 
 import extend.Teacher;
-import extend.testModule.*;
-
-import javax.swing.SwingConstants;
+import extend.testModule.Tester;
 
 
 
@@ -85,6 +86,11 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 	 * 
 	 */
 	public ActionListener listener;
+	 
+	/**
+	 * 
+	 */
+	public ExecutorService executor = Executors.newFixedThreadPool(10);
 	
 
 private void initialiseSpellChecker() {
@@ -249,6 +255,7 @@ private void initialiseSpellChecker() {
 	 */
 	public WindowOne(String user) {
 		this.u = user;
+		System.out.println("Egzekutor działa: "+executor.isShutdown());
 		setResizable(false);
 		setTitle("English Learner v 0.1 -beta version");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -333,6 +340,7 @@ private void initialiseSpellChecker() {
 
 		pack();
 		setVisible(true);
+		
 
 	}
 
@@ -343,13 +351,11 @@ private void initialiseSpellChecker() {
 		Object source = e.getSource();
 
 		if (source == startLearn) {
-
 			tea = new Teacher(u);
 			this.dispose();
 		}
 
 		if (source == startTest) {
-
 			testWin = new Tester(u);
 			this.dispose();
 		}

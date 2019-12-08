@@ -47,7 +47,7 @@ public class FinishPanel extends javax.swing.JPanel {
         raportBtn.setEnabled(false);
         raportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                repeatBtnActionPerformed(evt);
+                
             }
         });
 
@@ -85,9 +85,7 @@ public class FinishPanel extends javax.swing.JPanel {
                 .addGap(42, 42, 42))
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void repeatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repeatBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_repeatBtnActionPerformed
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel endMessageCenter;
     private javax.swing.JLabel endMessageDown;

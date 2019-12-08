@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
@@ -18,15 +20,17 @@ public class TestPanel extends javax.swing.JPanel {
      * @param words 
      * @param level 
      */
-    public TestPanel(List<String>words, String level) {
+    public TestPanel( String level) {
         
+    	
         end=false;
         this.difficult = level;
-        this.data = words;
-        counterWords = (words.size()/2);
+        this.data = Tester.words;
+        counterWords = (data.size()/2);
         
        
-        System.out.println(data.size());
+        System.out.println("Lista prywatna do działań: "+data.size());
+        System.out.println("Ilość słów counterWords: "+counterWords);
 
         if(difficult.equals("begginer")) {
         	minutes = delayBegginer*(data.size()/2);
@@ -105,20 +109,18 @@ public class TestPanel extends javax.swing.JPanel {
 					end = true;
 					timerLabel.setText("Time to end: 00:00");
 					timeAll.stop();
-					checkBtn.setText("END TEST");
+					Tester.checkBtn.setText("END TEST");
 
 				}
 				
 			}
 			
 		});
-
-      try {
-		masterTask.doInBackground();
-	} catch (Exception e1) {
-		
-		e1.printStackTrace();
-	}
+        counter = counterWords-1;
+        executor = Executors.newCachedThreadPool();
+        
+        executor.execute(masterTask);
+     
         
     }
     /**
@@ -133,7 +135,7 @@ public class TestPanel extends javax.swing.JPanel {
         questionLabel = new javax.swing.JLabel();
         userAnswear = new javax.swing.JTextField();
         decisionLabel = new javax.swing.JLabel();
-        checkBtn = new javax.swing.JButton();
+        
         timerLabel = new javax.swing.JLabel();
         wordsCountLabel = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
@@ -148,17 +150,23 @@ public class TestPanel extends javax.swing.JPanel {
         decisionLabel.setForeground(Color.DARK_GRAY);
         decisionLabel.setText("Your answear is: ");
 
-        checkBtn.setText("CHECK");
-        checkBtn.addActionListener(new ActionListener() {
+        
+        Tester.checkBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			String action = checkBtn.getText();
+			String action = Tester.checkBtn.getText();
 			if(action.equals("CHECK")) {
 				compareManual();
 			}
-			else if (action.equals("END TEST")) {
-				masterTask.done();
+			if (action.equals("END TEST")) {
+				//masterTask.done();
+				end=true;
+				Tester.testPanel.setVisible(false);
+				Tester.lastPanel.setVisible(true);
+				clear();
+				executor.shutdown();
+				
 			}
 				
 			}
@@ -174,6 +182,8 @@ public class TestPanel extends javax.swing.JPanel {
         wordsCountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         wordsCountLabel.setText("Questions to end:  "+counterWords+"/"+data.size()/2);
 
+        masterTask = new MasterTask();
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,7 +208,7 @@ public class TestPanel extends javax.swing.JPanel {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(167, 167, 167)
-                .addComponent(checkBtn)
+                .addComponent(Tester.checkBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -217,25 +227,29 @@ public class TestPanel extends javax.swing.JPanel {
                 .addGap(37, 37, 37)
                 .addComponent(decisionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addComponent(checkBtn)
+                .addComponent(Tester.checkBtn)
                 .addContainerGap())
         );
         
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton checkBtn;
+    
     private javax.swing.JLabel decisionLabel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel questionLabel;
     private javax.swing.JLabel timerLabel;
     private javax.swing.JTextField userAnswear;
     private javax.swing.JLabel wordsCountLabel;
+    private ExecutorService executor;
     private List<String> data = new ArrayList<String>();
     private int minutes;
     private int seconds=0;
     private Timer timeAll;
     private String difficult;
-    private MasterTask masterTask = new MasterTask();
+    /**
+     * Master thread for test.
+     */
+    private MasterTask masterTask;
     private final int delayBegginer = 180000;
     private final int delayIntermediate = 120000;
     private final int delayExpert = 60000;
@@ -253,6 +267,7 @@ public class TestPanel extends javax.swing.JPanel {
     private Thread decisionGood;
     private Thread decisionBad;
     private int counter;
+
     private String replace(String w) {
 		  String word = w.replaceAll("ą", "a").replaceAll("Ą", "A").replaceAll("ć", "c").replaceAll("Ć", "C").replaceAll("ę", "e").replaceAll("Ę", "E").replaceAll("ł", "l").replaceAll("Ł", "L").replaceAll("ń", "n").replaceAll("Ń", "N").replaceAll("ó", "o").replaceAll("Ó", "O").replaceAll("ś", "s").replaceAll("Ś", "S").replaceAll("ż", "z").replaceAll("Ż", "Z").replaceAll("ź", "z").replaceAll("Ź", "Z");
 
@@ -261,26 +276,30 @@ public class TestPanel extends javax.swing.JPanel {
     private synchronized void selectWord(){
     	question = new Thread(new Runnable() {
     		public void run() {
-    			if(counterP<data.size()-1) {
-    	    		questionLabel.setText(data.get(counterP));
+    			
+    				System.out.println("Thread selectWord started!");
+        			if(counterP<data.size()-1) {
+        	    		questionLabel.setText(data.get(counterP));
 
-    	    	}
-    		}
+        	    	}
+    			}
+
     	});
     	
     	question.start();
-    	compare();
     	
     }
     private synchronized void compare() {
+    	
     	equal = new Thread(new Runnable() {
     		String toCompare ;
     		String comparator;
     		public void run() {
-    			counter = counterWords-1;
+    			System.out.println("Thread equal started!");
+    			
     			if(counterE<data.size()) {
     				comparator = data.get(counterE);
-    			if(difficult.equals("begginer")) {
+    			if(difficult.equals("begginer") ) {
     				System.out.println("From list:"+comparator);
 
 	    			try {
@@ -302,10 +321,11 @@ public class TestPanel extends javax.swing.JPanel {
 						e.printStackTrace();
 					}
 	    		}
-	    		if(difficult.equals("Intermidiate")) {
+	    		if(difficult.equals("Intermidiate") ) {
 	    			System.out.println("From list:"+comparator);
 	    			try {
-						Thread.sleep(delayIntermediate);
+	    				
+	    				Thread.sleep(delayIntermediate);
 						toCompare = replace(userAnswear.getText());
 						System.out.println("From user:"+toCompare);
 						if(toCompare.equals(comparator)) {
@@ -326,7 +346,8 @@ public class TestPanel extends javax.swing.JPanel {
 	    		if(difficult.equals("expert")) {
 	    			System.out.println("From list:"+comparator);
 	    			try {
-						Thread.sleep(delayExpert);
+	    				
+	    				Thread.sleep(delayExpert);
 						toCompare = replace(userAnswear.getText());
 						System.out.println("From user:"+toCompare);
 						if(toCompare.equals(comparator)) {
@@ -344,7 +365,7 @@ public class TestPanel extends javax.swing.JPanel {
 						e.printStackTrace();
 					}
 	    		}
-    			}if(counter == 0) {
+    			}if(counter > 0) {
     				try {
 						Thread.sleep(100);
 						toCompare = replace(userAnswear.getText());
@@ -364,13 +385,15 @@ public class TestPanel extends javax.swing.JPanel {
 						
 						e.printStackTrace();
 					}
-    				end = true;
-    				checkBtn.setText("END TEST");
-    		}
+    				
+    		}else if(counter == 0) {
+    		
+			end = true;
+			Tester.checkBtn.setText("END TEST");}
     		}
     	});
     	equal.start();
-    	
+
     }
     private synchronized void nextWord() {
     	if(counterWords>0) {
@@ -430,19 +453,17 @@ public class TestPanel extends javax.swing.JPanel {
     	decisionBad.start();
     }
     private synchronized void compareManual() {
+    	
     	equalManual = new Thread(new Runnable() {
     		String toCompare ;
     		String comparator;
     		
     		public void run() {
-    			counter = counterWords-1;
-    			if(counterE<data.size() && counter > 0) {
+    			System.out.println("Compare thread started!");
+    			System.out.println("Counter: "+counter);
+    			if(counterE<data.size()&& counter>0) {
     				comparator = data.get(counterE);
-    			
     				System.out.println("From list:"+comparator);
-
-	    			try {
-						Thread.sleep(100);
 						toCompare = replace(userAnswear.getText());
 						System.out.println("From user:"+toCompare);
 						if(toCompare.equals(comparator)) {
@@ -455,16 +476,18 @@ public class TestPanel extends javax.swing.JPanel {
 		    				counterE+=2;
 		    				System.out.println(counter);
 		    			}
+						counter-=1;
 						nextWord();
-					} catch (InterruptedException e) {
-						
-						e.printStackTrace();
-					}
-    			}else if(counter == 0) {
+
+    			}else if(counter==0){
+    				comparator = data.get(counterE);
     				try {
 						Thread.sleep(100);
+						System.out.println("From list:"+comparator);
 						toCompare = replace(userAnswear.getText());
 						System.out.println("From user:"+toCompare);
+						end = true;
+	    				Tester.checkBtn.setText("END TEST");
 						if(toCompare.equals(comparator)) {
 		    				good();
 		    				
@@ -480,32 +503,58 @@ public class TestPanel extends javax.swing.JPanel {
 						
 						e.printStackTrace();
 					}
-    				end = true;
-    				checkBtn.setText("END TEST");
-    			}
+
+    				
+    			} 
 	    		
     		}
     		
     	});
-    	equalManual.start();
-    	
+	
+			equalManual.start();
+			
+
     }
-    class MasterTask extends SwingWorker<Void, Void>{
+    class MasterTask extends SwingWorker<Boolean, Boolean>{
 
 		@Override
-		protected Void doInBackground() throws Exception {
-			timeAll.start();
-			selectWord();
-			return null;
+		protected Boolean doInBackground() throws Exception {
+			
+			Boolean working = cancel(false);
+			String done = Tester.checkBtn.getText();
+			if(working && !done.equals("END TEST")) {
+				timeAll.start();
+				publish(working);
+			}else if(done.equals("END TEST")) {
+				done();
+				cancel(true);
+				}
+			return working;
+		}
+		
+		@Override
+		protected synchronized void process(List<Boolean> chunks) {
+			Boolean state = chunks.get(chunks.size()-1);
+			String done = Tester.checkBtn.getText();
+			if(state && !done.equals("END TEST")) {
+				selectWord();
+
+				System.out.println("Status of test master thread: "+state);
+			}else if(done.equals("END TEST")) {
+				done();
+				cancel(true);
+				}
 		}
 
 		@Override
 		protected void done() {
-			if(end) {
+			String done = Tester.checkBtn.getText();
+			if(end && done.equals("END TEST")) {
+				 
 			try {
+				timeAll.stop();
 				Thread.sleep(1);
-				Tester.testPanel.setVisible(false);
-				Tester.lastPanel.setVisible(true);
+				cancel(true);
 			} catch (InterruptedException e) {
 				
 				e.printStackTrace();
@@ -513,6 +562,21 @@ public class TestPanel extends javax.swing.JPanel {
 			
 		}
 		}
+    }
+    
+    /**
+     * Clear content function.
+     */
+    public void clear() {
+    	//System.out.println(question.getState());
+    	data.clear();
+    	end = false;
+    	counterE=1;
+    	counterP=0;
+    	masterTask.cancel(true);
+    	System.out.println("MasterTask canceled: "+masterTask.isCancelled());
+    	
+    	
     }
 	
 }

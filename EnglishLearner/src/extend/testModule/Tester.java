@@ -9,12 +9,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import app.WindowOne;
+import extend.testModule.TestPanel.MasterTask;
 /**
  *English learner test module.
  * @author pawel
@@ -23,7 +28,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 	/**
      * Username value.
      */
-    public String u;
+    public static String u;
 	StartPanel firstPanel ;
     /**
      * Second panel with test mechanic.
@@ -40,7 +45,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
     /**
      * List words for test.
      */
-    public List<String> words = new ArrayList<String>();
+    public static List<String> words = new ArrayList<String>();
     /**
      * Button for close test module from first welcome panel.
      */
@@ -53,11 +58,15 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
      * Button for starting test.
      */
     public static JButton startBtn = new JButton("START");
-    private JFileChooser fc;
-    private File defined;
-    private BufferedReader br;
-    private String wiersz = null;
-    private WindowOne win;
+    /**
+     * Button for checking answears.
+     */
+    public static JButton checkBtn = new JButton("CHECK");
+    private static JFileChooser fc;
+    private static File defined;
+    private static BufferedReader br;
+    private static String wiersz = null;
+   
     /**
      * Creates new form Tester.
      * @param user 
@@ -76,9 +85,12 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
         firstPanel.setVisible(true);
         this.add(firstPanel);
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
-        
-        pack();
         open();
+        initComponents();
+		setTitle("English Learner v 0.1 -beta version");
+		this.setVisible(true);
+        pack();
+        
 
     }
     /**
@@ -97,7 +109,10 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
         setVisible(false);
         pack();
     }
-    private void open() {
+    /**
+     * This method is opened and get file content.
+     */
+    static void open() {
 
 		fc = new JFileChooser(defined);
 		System.out.println(defined.getAbsolutePath());
@@ -118,6 +133,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 						i++;
 						
 					}
+					br.close();
 				} catch (IOException e) {
 					
 					e.printStackTrace();
@@ -126,16 +142,15 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 			String plik = new String(fc.getSelectedFile().toString());
 			System.out.println(plik);
 			System.out.println(words.toString());
-			initComponents();
-			setTitle("English Learner v 0.1 -beta version");
-			this.setVisible(true);
+			
+			
 		}
 
 		else {
-			
+			WindowOne win = new WindowOne(u);
 			win = new WindowOne(u);
 			win.setVisible(true);
-			this.dispose();
+			
 
 		}
 
@@ -144,7 +159,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
      * @param w
      * @return word
      */
-    public String replace(String w) {
+    public static String replace(String w) {
 		  String word = w.replaceAll("ą", "a").replaceAll("Ą", "A").replaceAll("ć", "c").replaceAll("Ć", "C").replaceAll("ę", "e").replaceAll("Ę", "E").replaceAll("ł", "l").replaceAll("Ł", "L").replaceAll("ń", "n").replaceAll("Ń", "N").replaceAll("ó", "o").replaceAll("Ó", "O").replaceAll("ś", "s").replaceAll("Ś", "S").replaceAll("ż", "z").replaceAll("Ż", "Z").replaceAll("ź", "z").replaceAll("Ź", "Z");
 
 		 return word;
@@ -153,23 +168,50 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == startBtn) {
+			
 			firstPanel.setVisible(false);
-			testPanel = new TestPanel(words, firstPanel.level);
+			testPanel = new TestPanel( firstPanel.level);
 			testPanel.setSize(sizePanel);
 			this.add(testPanel);
 			testPanel.setVisible(true);
+			
 			lastPanel = new FinishPanel();
 			lastPanel.setSize(sizePanel);
 			this.add(lastPanel);
 			lastPanel.setVisible(false);
 
 		}
-		if(e.getSource() == exitBtn || e.getSource() == exitFinalBtn) {
+		if(e.getSource() == exitBtn) {
 		System.out.println("button EXIT pressed.");
-		win = new WindowOne(u);
+		
+		clearBuff();
+		WindowOne win = new WindowOne(u);
+		
 		win.setVisible(true);
 		this.dispose();
+		
+
+		}
+		
+		if(e.getSource() == exitFinalBtn) {
+			System.out.println("button EXIT pressed.");
+			testPanel.clear();
+			clearBuff();	
+			WindowOne win = new WindowOne(u);
+				
+			win.setVisible(true);	
+			this.dispose();
+
+			}
+		String change = checkBtn.getText();
+		if(change.equals("END TEST")) {
+			
+			lastPanel.setVisible(true);
+			
 		}
 
 	}
+    private void clearBuff() {
+    	words.clear();
+    }
 }
