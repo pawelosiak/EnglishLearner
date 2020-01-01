@@ -5,6 +5,8 @@ import java.util.Locale;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import extend.testModule.FuzzyLogic;
+
 /**
  * @author pawel
  *
@@ -24,6 +26,7 @@ public class Main {
 			public void run() {
 
 				new AppWindow();
+				new FuzzyLogic("medium", 20, 10);
 				
 			}
 		});
