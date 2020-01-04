@@ -1,0 +1,4 @@
+Plik użyty do testu: C:\Users\pawel\git\EnglishLearner\EnglishLearner\EnglishLearner\PAWEL\test1.txt
+Wynik : 3.0/6.0
+Poziom trudności: begginer
+Fuzzy :30.0

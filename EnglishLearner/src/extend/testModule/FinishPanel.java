@@ -1,4 +1,10 @@
 package extend.testModule;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 /**
  *
@@ -11,8 +17,9 @@ public class FinishPanel extends javax.swing.JPanel {
     public FinishPanel() {
         initComponents();
         endMessageup.setText("                   Test is done.                           ");
-        endMessageCenter.setText("Your result is : +result, so is +message type of result");
-        endMessageDown.setText("Run test again or come back to learning mode for increase your skill");
+        
+        endMessageDown.setText("Try back to learning mode for increase your skill");
+        
         
     }
     /**
@@ -26,7 +33,6 @@ public class FinishPanel extends javax.swing.JPanel {
         endMessageup = new javax.swing.JLabel();
         endMessageCenter = new javax.swing.JLabel();
         endMessageDown = new javax.swing.JLabel();
-        raportBtn = new javax.swing.JButton();
         
         endMessageup.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         endMessageup.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -35,61 +41,61 @@ public class FinishPanel extends javax.swing.JPanel {
 
         endMessageCenter.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         endMessageCenter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        endMessageCenter.setText("Your result is : +result, so it's +message type of result");
+        endMessageCenter.setText("");
         endMessageCenter.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         endMessageDown.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         endMessageDown.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        endMessageDown.setText("Run test again or come back to learning mode for increase your skill");
+        endMessageDown.setText("");
         endMessageDown.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        raportBtn.setText("CREATE RAPORT?");
-        raportBtn.setEnabled(false);
-        raportBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-            }
-        });
+        
+        JPanel buttonPanel = new JPanel();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(endMessageCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endMessageDown, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                    .addComponent(endMessageup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(raportBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Tester.exitFinalBtn)
-                .addGap(96, 96, 96))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(21)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        						.addComponent(endMessageCenter, GroupLayout.PREFERRED_SIZE, 441, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(endMessageDown, GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+        						.addComponent(endMessageup, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(148)
+        					.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(endMessageup)
-                .addGap(18, 18, 18)
-                .addComponent(endMessageCenter)
-                .addGap(26, 26, 26)
-                .addComponent(endMessageDown)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(raportBtn)
-                    .addComponent(Tester.exitFinalBtn))
-                .addGap(42, 42, 42))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(50)
+        			.addComponent(endMessageup)
+        			.addGap(18)
+        			.addComponent(endMessageCenter)
+        			.addGap(26)
+        			.addComponent(endMessageDown)
+        			.addGap(54)
+        			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(75, Short.MAX_VALUE))
         );
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        buttonPanel.add(Tester.exitFinalBtn);
+        
+        this.setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
+    public void callFuzzy() {
+    	endMessageCenter.setText("Your result is : "+this.goodAnswears+"/"+this.wordsCount);
+    	new FuzzyLogic(difficult, wordsCount, goodAnswears);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel endMessageCenter;
     private javax.swing.JLabel endMessageDown;
     private javax.swing.JLabel endMessageup;
-    private javax.swing.JButton raportBtn;
-    // End of variables declaration//GEN-END:variables
+    public String filePath;
+    public String difficult;
+    public int wordsCount;
+    public int goodAnswears;
 }

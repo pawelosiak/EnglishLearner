@@ -1,6 +1,17 @@
 package extend.testModule;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Date;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * @author pawel Test rating module maded with simple fuzzylogic CoG inference
@@ -66,6 +77,7 @@ public class FuzzyLogic {
 		System.out.println("Collection difficult: "+collectionDiff+" collection result: "+collectionRes);
 		defuzzify(diffValueEasy, diffValueMedium, diffValueHard, resValueBad, resValueMid, resValueGood, collectionDiff, collectionRes );
 
+		genReport();
 		// float val = Float.parseFloat(difficultMedium[0][1].replaceAll(",", "."));
 
 	}
@@ -431,7 +443,7 @@ public class FuzzyLogic {
 		float temp1 = Math.max(valueFirst, valueSecond);
 		float temp2 = Math.max(valueSecond, valueThird);
 		maxRes = Math.max(temp1, temp2);
-		if (valueFirst > valueSecond) {
+		if (valueFirst < valueSecond) {
 			collectionRes = new String("bad");
 		} else if (valueSecond > valueThird) {
 			collectionRes = new String("medium");
@@ -452,13 +464,13 @@ public class FuzzyLogic {
 
 		float bonus = 0;
 
-		if (difficult.equals("easy")) {
+		if (difficult.equals("begginer")) {
 			bonus = 0.0f;
 		}
-		if (difficult.equals("medium")) {
+		if (difficult.equals("intermediate")) {
 			bonus = 0.1f;
 		}
-		if (difficult.equals("hard")) {
+		if (difficult.equals("expert")) {
 			bonus = 0.2f;
 		}
 
@@ -780,5 +792,51 @@ public class FuzzyLogic {
 		fuzzyValue = y;
 		
 		return fuzzyValue;
+	}
+
+	private void genReport() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date(System.currentTimeMillis());
+		int i=1;
+		String fail;
+		
+		try {
+		
+				Path reports = Files.createFile(Paths.get("EnglishLearner/"+Tester.u+"/TestsResults/TestReport"+i+formatter.format(date)+".txt"));
+				File report = new File(reports.toString());
+				System.out.println(report);
+				PrintWriter pw  = new PrintWriter(report);
+				
+				pw.println("Plik użyty do testu: "+Tester.filePath);
+				pw.println("Wynik : "+usersPoints+"/"+wordCount);
+				pw.println("Poziom trudności: "+difficult);
+				pw.println("Fuzzy :"+fuzzyValue);
+				pw.close();
+			
+			
+		} catch (IOException e) {
+			
+			if(e.getMessage()!=null) {
+				i+=1;
+				Path reports;
+				try {
+					reports = Files.createFile(Paths.get("EnglishLearner/"+Tester.u+"/TestsResults/TestReport"+i+formatter.format(date)+".txt"));
+					File report = new File(reports.toString());
+					System.out.println(report);
+					PrintWriter pw  = new PrintWriter(report);
+					
+					pw.println("Plik użyty do testu: "+Tester.filePath);
+					pw.println("Wynik : "+usersPoints+"/"+wordCount);
+					pw.println("Poziom trudności: "+difficult);
+					pw.println("Fuzzy :"+fuzzyValue);
+					pw.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+			
+		}
 	}
 }

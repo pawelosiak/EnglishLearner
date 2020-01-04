@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -66,6 +68,10 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
     private static File defined;
     private static BufferedReader br;
     private static String wiersz = null;
+    /**
+     * Path to used file directory.
+     */
+    public static String filePath;
    
     /**
      * Creates new form Tester.
@@ -75,6 +81,12 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
     public Tester(String user) {
         
     	this.u = user;
+    	try {
+			Files.createDirectory(Paths.get("EnglishLearner/"+u+"/TestsResults"));
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
     	defined = new File("EnglishLearner/"+u);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setPreferredSize(sizeFrame);
@@ -121,6 +133,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 
 			int i=0;
 			File plik1 = fc.getSelectedFile();
+			filePath = plik1.getAbsolutePath();
 				//Import file values to ArrayList
 				try {
 					br = new BufferedReader(new FileReader(plik1));
@@ -131,6 +144,7 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 					String prep = replace((wiersz.trim()));
 					words.add(prep);
 						i++;
+						
 						
 					}
 					br.close();
@@ -177,6 +191,8 @@ public class Tester extends javax.swing.JFrame implements ActionListener{
 			
 			lastPanel = new FinishPanel();
 			lastPanel.setSize(sizePanel);
+			lastPanel.filePath = filePath;
+			lastPanel.difficult = firstPanel.level;
 			this.add(lastPanel);
 			lastPanel.setVisible(false);
 

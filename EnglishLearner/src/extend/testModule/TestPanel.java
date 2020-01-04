@@ -163,7 +163,10 @@ public class TestPanel extends javax.swing.JPanel {
 				//masterTask.done();
 				end=true;
 				Tester.testPanel.setVisible(false);
+				Tester.lastPanel.goodAnswears = goodAnswears;
+				Tester.lastPanel.wordsCount = data.size()/2;
 				Tester.lastPanel.setVisible(true);
+				Tester.lastPanel.callFuzzy();
 				clear();
 				executor.shutdown();
 				
@@ -243,6 +246,7 @@ public class TestPanel extends javax.swing.JPanel {
     private ExecutorService executor;
     private List<String> data = new ArrayList<String>();
     private int minutes;
+    private int goodAnswears = 0;
     private int seconds=0;
     private Timer timeAll;
     private String difficult;
@@ -309,6 +313,7 @@ public class TestPanel extends javax.swing.JPanel {
 						if(toCompare.equals(comparator)) {
 		    				good();
 		    				counterE+=2;
+		    				
 		    				
 		    				}
 		    			else if(!toCompare.equals(comparator)) {
@@ -412,6 +417,8 @@ public class TestPanel extends javax.swing.JPanel {
 				decisionLabel.setForeground(new Color(15,101,9));
 				decisionLabel.setText("Your answear is: good");
 				decisionLabel.setVisible(true);
+				goodAnswears = goodAnswears+1;
+				System.out.println("Dobrych odpowiedzi: "+goodAnswears);
 				
 					try {
 						userAnswear.setText("");
