@@ -26,7 +26,7 @@ public class Main {
 			public void run() {
 
 				new AppWindow();
-				new FuzzyLogic("medium", 20, 10);
+				
 				
 			}
 		});

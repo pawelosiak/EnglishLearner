@@ -29,10 +29,9 @@ public class FuzzyLogic {
 	static float[][] finalResExcellent = new float[101][3];
 
 	// zmienne wej�ciowe u�ytkownika
-	//float failPoints;
+	// float failPoints;
 	float usersPoints;
 	float wordCount;
-	
 
 	// zmienne do oblicze� fuzzy
 	private String difficult;
@@ -51,18 +50,21 @@ public class FuzzyLogic {
 	DecimalFormat form1 = new DecimalFormat("0");
 
 	/**
-	 * @param level 
+	 * @param level
 	 * 
 	 */
 	public FuzzyLogic(String level, int wordsAll, int wordsGood) {
-		this.difficult=level;
-		this.wordCount =(float) wordsAll;
-		//this.failPoints = wordsBad;
-		this.usersPoints = (float)wordsGood;
-		
+		this.difficult = level;
+		this.wordCount = (float) wordsAll;
+		// this.failPoints = wordsBad;
+		this.usersPoints = (float) wordsGood;
+
 		fillTermsDifficult();
 		fillTermsExamRes();
 		fuzzifyTerms();
+		System.out.println("Values difficult: "+diffValueEasy+" "+diffValueMedium+" "+diffValueHard+", values result: "+resValueBad+" "+resValueMid+" "+resValueGood);
+		System.out.println("Collection difficult: "+collectionDiff+" collection result: "+collectionRes);
+		defuzzify(diffValueEasy, diffValueMedium, diffValueHard, resValueBad, resValueMid, resValueGood, collectionDiff, collectionRes );
 
 		// float val = Float.parseFloat(difficultMedium[0][1].replaceAll(",", "."));
 
@@ -324,7 +326,7 @@ public class FuzzyLogic {
 		float valueThird = 0;
 		float maxRes;
 
-		System.out.println("Result value: "+result);
+		System.out.println("Result value: " + result);
 		if (result == 0) {
 			resValueBad = Float.parseFloat(examResbad[0][0].replaceAll(",", "."));
 			valueFirst = Float.parseFloat(examResbad[0][1].replaceAll(",", "."));
@@ -334,43 +336,111 @@ public class FuzzyLogic {
 			valueThird = 1.0f;
 		}
 		if (result != 0) {
-			if (wordsAll > 0 && wordsAll < 21) {
-				for (int i = 0; i < difficultEasy.length; i++) {
-					for (int j = 0; j < difficultEasy.length; j++) {
+			if (result > 0 && result < 30) {
+				for (int i = 0; i < examResbad.length; i++) {
+					for (int j = 0; j < examResbad.length; j++) {
 						if (j == 0) {
-							float x1 = Float.parseFloat(difficultEasy[i][j].replaceAll(",", "."));
-							if (x1 == wordsAll) {
-								valueFirst = Float.parseFloat(difficultEasy[i][j + 1].replaceAll(",", "."));
+							float x1 = Float.parseFloat(examResbad[i][j].replaceAll(",", "."));
+							if (x1 == result) {
+								valueFirst = Float.parseFloat(examResbad[i][j + 1].replaceAll(",", "."));
 							}
 						}
 					}
 				}
 			}
-			if (wordsAll > 19 && wordsAll < 39) {
-				for (int i = 0; i < difficultMedium.length; i++) {
-					for (int j = 0; j < difficultMedium.length; j++) {
+			if (result > 25 && result < 55) {
+				for (int i = 0; i < examResMid.length; i++) {
+					for (int j = 0; j < examResMid.length; j++) {
 						if (j == 0) {
-							float x1 = Float.parseFloat(difficultMedium[i][j].replaceAll(",", "."));
-							if (x1 == wordsAll) {
-								valueSecond = Float.parseFloat(difficultMedium[i][j + 1].replaceAll(",", "."));
+							float x1 = Float.parseFloat(examResMid[i][j].replaceAll(",", "."));
+							if (x1 == result) {
+								valueSecond = Float.parseFloat(examResMid[i][j + 1].replaceAll(",", "."));
 							}
 						}
 					}
 				}
 			}
-			if (wordsAll > 35 && wordsAll < 59) {
-				for (int i = 0; i < difficultHard.length; i++) {
-					for (int j = 0; j < difficultHard.length; j++) {
+			if (result > 53 && result <= 100) {
+				for (int i = 0; i < examResGood.length; i++) {
+					for (int j = 0; j < examResGood.length; j++) {
 						if (j == 0) {
-							float x1 = Float.parseFloat(difficultHard[i][j].replaceAll(",", "."));
-							if (x1 == wordsAll) {
-								valueThird = Float.parseFloat(difficultHard[i][j + 1].replaceAll(",", "."));
+							float x1 = Float.parseFloat(examResGood[i][j].replaceAll(",", "."));
+							if (x1 == result) {
+								valueThird = Float.parseFloat(examResGood[i][j + 1].replaceAll(",", "."));
 							}
 						}
 					}
 				}
 			}
 		}
+		if (valueFirst != 0 && valueSecond != 0) {
+			maxRes = Math.max(valueFirst, valueSecond);
+			if (valueFirst > valueSecond) {
+				for (int i = 0; i < examResbad.length; i++) {
+					for (int j = 0; j < examResbad.length; j++) {
+						if (j == 1) {
+							if (maxRes < Float.parseFloat(examResbad[i][j].replaceAll(",", "."))) {
+								examResbad[i][j] = form.format(maxRes);
+							}
+						}
+					}
+				}
+			}
+
+			if (valueFirst < valueSecond) {
+				for (int i = 0; i < examResMid.length; i++) {
+					for (int j = 0; j < examResMid.length; j++) {
+						if (j == 1) {
+							if (maxRes < Float.parseFloat(examResMid[i][j].replaceAll(",", "."))) {
+								examResMid[i][j] = form.format(maxRes);
+							}
+						}
+					}
+				}
+			}
+
+		}
+
+		if (valueThird != 0 && valueSecond != 0) {
+			maxRes = Math.max(valueThird, valueSecond);
+			if (valueSecond > valueThird) {
+				for (int i = 0; i < examResMid.length; i++) {
+					for (int j = 0; j < examResMid.length; j++) {
+						if (j == 1) {
+							if (maxRes < Float.parseFloat(examResMid[i][j].replaceAll(",", "."))) {
+								examResMid[i][j] = form.format(maxRes);
+							}
+						}
+					}
+				}
+			}
+
+			if (valueSecond < valueThird) {
+				for (int i = 0; i < examResGood.length; i++) {
+					for (int j = 0; j < examResGood.length; j++) {
+						if (j == 1) {
+							if (maxRes < Float.parseFloat(examResGood[i][j].replaceAll(",", "."))) {
+								examResGood[i][j] = form.format(maxRes);
+							}
+						}
+					}
+				}
+			}
+
+		}
+		float temp1 = Math.max(valueFirst, valueSecond);
+		float temp2 = Math.max(valueSecond, valueThird);
+		maxRes = Math.max(temp1, temp2);
+		if (valueFirst > valueSecond) {
+			collectionRes = new String("bad");
+		} else if (valueSecond > valueThird) {
+			collectionRes = new String("medium");
+		} else if (valueSecond < valueThird) {
+			collectionRes = new String("good");
+		}
+		resValueBad = valueFirst;
+		resValueMid = valueSecond;
+		resValueGood = valueThird;
 	}
 
 	private void cutDifficult(String difficult, float wordsAll) {
@@ -510,7 +580,205 @@ public class FuzzyLogic {
 
 	private float calcResult(float wordsAll, float wordsGood) {
 
-		float result = (wordsGood / wordsAll)*100.0f;
-		return result;
+		float result = (wordsGood / wordsAll) * 100.0f;
+		String temporaryRes = form1.format(result);
+		return Float.parseFloat(temporaryRes);
+	}
+
+	private float defuzzify(float x1, float x2, float x3, float x4, float x5, float x6, String difficult, String collectionRes) {
+
+		/*
+		 * x1, x2, x3 - difficult values; x4, x5, x6 - result values;
+		 * 
+		 * Defuzzify rules for terms difficult, exam result and final result as out.
+		 * Rule1: IF bad AND easy THEN Vbad 
+		 * Rule2: IF bad AND medium THEN bad 
+		 * Rule3: IF bad AND hard THEN Lmid
+		 * 
+		 * Rule4: IF medium AND easy Then Lmid 
+		 * Rule5: IF medium AND medium THEN mid 
+		 * Rule6: IF medium AND hard THEN Lgood
+		 * 
+		 * Rule7: IF good AND easy THEN mid 
+		 * Rule8: IF good AND medium THEN Lgood 
+		 * Rule9: IF good AND hard THEN good
+		 * 
+		 */
+
+		float diffValueFirst = 0;
+		float diffValueSecond = 0;
+		float diffValueThird = 0;
+
+		float resValueFirst = 0;
+		float resValueSecond = 0;
+		float resValueThird = 0;
+		float y = 0;
+
+		if (difficult.equals("easy") && collectionRes.equals("bad")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueFirst, resValueFirst);// Vbad
+			float h2 = Math.min(diffValueFirst, resValueSecond);// Lbad
+			float h3 = Math.min(diffValueFirst, resValueThird);// mid
+
+			
+
+			y = (10*h1+30*h2+40*0+50*h3+70*0+90*0) / (h1+h2+0+h3+0);
+
+		}
+		if (difficult.equals("medium") && collectionRes.equals("bad")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueSecond, resValueFirst);// bad
+			float h2 = Math.min(diffValueSecond, resValueSecond);// mid
+			float h3 = Math.min(diffValueSecond, resValueThird);// Lgood
+
+			
+
+			y = (10*0+30*h1+40*0+50*h2+70*h3+90*0) / (0+h1+0+h2+h3+0);
+
+		}
+		if (difficult.equals("hard") && collectionRes.equals("bad")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueThird, resValueFirst);// Lmid
+			float h2 = Math.min(diffValueThird, resValueSecond);// Lgood
+			float h3 = Math.min(diffValueThird, resValueThird);// good
+
+			
+
+			y = (10*0+30*0+40*h1+50*0+70*h2+90*h3) / (h1+h2+0+h3+0);
+
+		}
+		if (difficult.equals("easy") && collectionRes.equals("medium")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueFirst, resValueSecond);//Lbad
+			float h2 = Math.min(diffValueFirst, resValueFirst);// Vbad
+			float h3 = Math.min(diffValueFirst, resValueThird);// mid
+
+			
+
+			y = (10*h2+30*h1+40*0+50*h3+70*0+90*0) / (h1+h2+0+h3+0);
+
+		}
+		if (difficult.equals("medium") && collectionRes.equals("medium")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueSecond, resValueSecond);// mid
+			float h2 = Math.min(diffValueSecond, resValueFirst);// mid
+			float h3 = Math.min(diffValueSecond, resValueThird);// Lgood
+
+			float h = Math.max(h2, h1);
+
+			y = (10*0+30*0+40*0+50*h+70*h3+90*0) / (h+0+0+h3+0);
+
+		}
+		if (difficult.equals("hard") && collectionRes.equals("medium")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueThird, resValueSecond);// Lgood
+			float h2 = Math.min(diffValueThird, resValueFirst);// Lmid
+			float h3 = Math.min(diffValueThird, resValueThird);// good
+
+			
+
+			y = (10*0+30*0+40*h2+50*0+70*h1+90*h3) / (h1+h2+0+0+h3+0);
+
+		}
+		if (difficult.equals("easy") && collectionRes.equals("good")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueFirst, resValueThird);// mid
+			float h2 = Math.min(diffValueFirst, resValueSecond);// Lbad
+			float h3 = Math.min(diffValueFirst, resValueFirst);// Vbad
+
+			
+
+			y = (10*h3+30*h2+40*0+50*h1+70*0+90*0) / (h1+h2+0+h3+0);
+
+		}
+		if (difficult.equals("medium") && collectionRes.equals("good")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueSecond, resValueThird);// Lgood
+			float h2 = Math.min(diffValueSecond, resValueSecond);// mid
+			float h3 = Math.min(diffValueSecond, resValueFirst);//bad
+
+			
+
+			y = (10*h3+30*0+40*0+50*h2+70*h1+90*0) / (h1+0+h2+0+h3+0);
+
+		}
+		if (difficult.equals("hard") && collectionRes.equals("good")) {
+
+			diffValueFirst = x1;
+			diffValueSecond = x2;
+			diffValueThird = x3;
+			resValueFirst = x4;
+			resValueSecond = x5;
+			resValueThird = x6;
+
+			float h1 = Math.min(diffValueThird, resValueThird);// good
+			float h2 = Math.min(diffValueThird, resValueFirst);// mid
+			float h3 = Math.min(diffValueThird, resValueSecond);// Lmid
+
+			
+
+			y = (10*0+30*0+40*h3+50*h2+70*0+90*h1) / (h1+0+h2+0+h3+0);
+
+		}
+		System.out.println("Fuzzy value is: "+y);
+		fuzzyValue = y;
+		
+		return fuzzyValue;
 	}
 }
