@@ -810,16 +810,24 @@ public class FuzzyLogic {
 				pw.println("Plik użyty do testu: "+Tester.filePath);
 				pw.println("Wynik : "+usersPoints+"/"+wordCount);
 				pw.println("Poziom trudności: "+difficult);
-				pw.println("Fuzzy :"+fuzzyValue);
+				pw.println("Wartość modułu oceniającego :"+fuzzyValue);
+				pw.println("Wartości liczbowe z modułu oceniającego oznaczają odpowiednio:");
+				pw.println("10 - bardzo zły wynik, musisz jeszcze dużo pracować nad słownictwem");
+				pw.println("30 - zły wynik, nadal bardzo słabo pracuj dalej");
+				pw.println("40 - średnio, powinieneś nadal dużo pracować");
+				pw.println("50 - robisz postępy, popracuj jeszcze trochę aby było lepiej");
+				pw.println("70 - całkiem niezle, idzie Ci coraz lepiej");
+				pw.println("90 - bardzo dobrze, ciężką pracą osiągasz sukces");
 				pw.close();
 			
 			
 		} catch (IOException e) {
 			
 			if(e.getMessage()!=null) {
-				i+=1;
+				
 				Path reports;
 				try {
+					i+=1;
 					reports = Files.createFile(Paths.get("EnglishLearner/"+Tester.u+"/TestsResults/TestReport"+i+formatter.format(date)+".txt"));
 					File report = new File(reports.toString());
 					System.out.println(report);
@@ -828,7 +836,14 @@ public class FuzzyLogic {
 					pw.println("Plik użyty do testu: "+Tester.filePath);
 					pw.println("Wynik : "+usersPoints+"/"+wordCount);
 					pw.println("Poziom trudności: "+difficult);
-					pw.println("Fuzzy :"+fuzzyValue);
+					pw.println("Wartość modułu oceniającego :"+fuzzyValue);
+					pw.println("Wartości liczbowe z modułu oceniającego oznaczają odpowiednio:");
+					pw.println("10 - bardzo zły wynik, musisz jeszcze dużo pracować nad słownictwem");
+					pw.println("30 - zły wynik, nadal bardzo słabo pracuj dalej");
+					pw.println("40 - średnio, powinieneś nadal dużo pracować");
+					pw.println("50 - robisz postępy, popracuj jeszcze trochę aby było lepiej");
+					pw.println("70 - całkiem niezle, idzie Ci coraz lepiej");
+					pw.println("90 - bardzo dobrze, ciężką pracą osiągasz sukces");
 					pw.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
