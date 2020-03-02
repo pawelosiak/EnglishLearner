@@ -1,0 +1,12 @@
+Plik użyty do testu: C:\Users\pawel\git\EnglishLearner\EnglishLearner\EnglishLearner\PAWEL\test1.txt
+Wynik : 1.0/6.0
+Poziom trudności: begginer
+Wartość modułu oceniającego :10.0
+Wartości liczbowe z modułu oceniającego oznaczają odpowiednio:
+10 - bardzo zły wynik, musisz jeszcze dużo pracować nad słownictwem
+30 - zły wynik, nadal bardzo słabo pracuj dalej
+40 - średnio, powinieneś nadal dużo pracować
+50 - robisz postępy, popracuj jeszcze trochę aby było lepiej
+70 - całkiem nieźle, idzie Ci coraz lepiej
+90 - bardzo dobrze, ciężką pracą osiągasz sukces
+100 – rewelacja, opanowałeś ten plik testowy do perfekcji

@@ -1,0 +1,11 @@
+Plik użyty do testu: C:\Users\pawel\git\EnglishLearner\EnglishLearner\EnglishLearner\PAWEL\test1.txt
+Wynik : 3.0/6.0
+Poziom trudności: expert
+Wartość modułu oceniającego :30.0
+Wartości liczbowe z modułu oceniającego oznaczają odpowiednio:
+10 - bardzo zły wynik, musisz jeszcze dużo pracować nad słownictwem
+30 - zły wynik, nadal bardzo słabo pracuj dalej
+40 - średnio, powinieneś nadal dużo pracować
+50 - robisz postępy, popracuj jeszcze trochę aby było lepiej
+70 - całkiem niezle, idzie Ci coraz lepiej
+90 - bardzo dobrze, ciężką pracą osiągasz sukces
