@@ -98,11 +98,12 @@ public class FuzzyLogic {
 				} else if (j == 1) {
 					examResbad[i][j] = form.format(step);
 
-					if (value >= 0 && value <= 20) {
+					if (value >= 0 && value <= 19) {
 						step = 1.0f;
+						
 
 					}
-					if (value > 20 && value <= 30.0) {
+					if (value > 19 && value <= 29) {
 						step -= 0.1f;
 						if (step == 0.79999995f) {
 							step += 0.01f;
@@ -120,7 +121,7 @@ public class FuzzyLogic {
 
 			}
 		}
-		value = 25;
+		value = 19;
 		step = 0;
 		System.out.println("");
 		System.out.println("--------------------");
@@ -135,11 +136,15 @@ public class FuzzyLogic {
 				} else if (j == 1) {
 					examResMid[i][j] = form.format(step);
 
-					if (value >= 25 && value <= 35) {
+					if (value >= 19 && value <= 29) {
 						step += 0.1f;
+						if (step == 0.79999995f) {
+							step += 0.01f;
+
+						}
 
 					}
-					if (value > 35 && value < 45) {
+					if (value > 29 && value < 45) {
 						step = 1.0f;
 					}
 					if (value > 45) {
@@ -160,7 +165,7 @@ public class FuzzyLogic {
 
 			}
 		}
-		value = 53;
+		value = 45;
 		step = 0;
 		System.out.println("");
 		System.out.println("--------------------");
@@ -175,11 +180,11 @@ public class FuzzyLogic {
 				} else if (j == 1) {
 					examResGood[i][j] = form.format(step);
 
-					if (value > 63) {
+					if (value > 55) {
 						step = 1.0f;
 
 					}
-					if (value > 53 && value <= 63) {
+					if (value > 45 && value <= 55) {
 						step += 0.1f;
 						if (step == 0.79999995f) {
 							step += 0.01f;
@@ -215,11 +220,11 @@ public class FuzzyLogic {
 				} else if (j == 1) {
 					difficultEasy[i][j] = form.format(step);
 
-					if (value >= 1 && value < 11) {
-						step += 0.1;
+					if (value >= 0 && value <= 10) {
+						step = 1.0f;
 
 					}
-					if (value > 11 && value <= 21.0) {
+					if (value > 10 && value <= 20) {
 						step -= 0.1f;
 						if (step == 0.79999995f) {
 							step += 0.01f;
@@ -239,7 +244,7 @@ public class FuzzyLogic {
 			}
 
 		}
-		value = 19;
+		value = 10;
 		step = 0;
 		System.out.println("");
 		System.out.println("--------------------");
@@ -257,12 +262,21 @@ public class FuzzyLogic {
 						step = 1.0f;
 
 					}
-					if (value > 29.0 && value <= 39.0) {
-						step -= 0.1f;
+					if (value >= 10 && value <= 20) {
+						step += 0.1f;
+						if (step == 0.79999995f) {
+							step += 0.01f;
+
+						}
 
 					}
-					if (value > 19 && value <= 29.0) {
-						step += 0.1f;
+					if (value > 20 && value <= 45) {
+						step =1.0f;
+						
+						
+					}
+					if(value > 45 && value <=55) {
+						step -=0.1f;
 						if (step == 0.79999995f) {
 							step += 0.01f;
 
@@ -280,7 +294,7 @@ public class FuzzyLogic {
 
 			}
 		}
-		value = 35;
+		value = 45;
 		step = 0;
 		System.out.println("");
 		System.out.println("--------------------");
@@ -295,16 +309,17 @@ public class FuzzyLogic {
 				} else if (j == 1) {
 					difficultHard[i][j] = form.format(step);
 
-					if (value > 45) {
-						step = 1.0f;
-
-					}
-					if (value >= 35 && value <= 45) {
+					if (value >= 45 && value <=55) {
 						step += 0.1f;
 						if (step == 0.79999995f) {
 							step += 0.01f;
 
 						}
+
+					}
+					if (value > 55) {
+						step = 1.0f;
+						
 					}
 					if (step < 0.0) {
 						step = 0.0f;
@@ -348,7 +363,7 @@ public class FuzzyLogic {
 			valueThird = 1.0f;
 		}
 		if (result != 0) {
-			if (result > 0 && result < 30) {
+			if (result > 0 && result < 29) {
 				for (int i = 0; i < examResbad.length; i++) {
 					for (int j = 0; j < examResbad.length; j++) {
 						if (j == 0) {
@@ -360,7 +375,7 @@ public class FuzzyLogic {
 					}
 				}
 			}
-			if (result > 25 && result < 55) {
+			if (result > 19 && result < 55) {
 				for (int i = 0; i < examResMid.length; i++) {
 					for (int j = 0; j < examResMid.length; j++) {
 						if (j == 0) {
@@ -372,7 +387,7 @@ public class FuzzyLogic {
 					}
 				}
 			}
-			if (result > 53 && result <= 100) {
+			if (result > 45 && result <= 100) {
 				for (int i = 0; i < examResGood.length; i++) {
 					for (int j = 0; j < examResGood.length; j++) {
 						if (j == 0) {
@@ -443,7 +458,7 @@ public class FuzzyLogic {
 		float temp1 = Math.max(valueFirst, valueSecond);
 		float temp2 = Math.max(valueSecond, valueThird);
 		maxRes = Math.max(temp1, temp2);
-		if (valueFirst < valueSecond) {
+		if (valueFirst > valueSecond) {
 			collectionRes = new String("bad");
 		} else if (valueSecond > valueThird) {
 			collectionRes = new String("medium");
@@ -478,12 +493,12 @@ public class FuzzyLogic {
 			diffValueEasy = Float.parseFloat(difficultEasy[0][0].replaceAll(",", "."));
 			valueFirst = Float.parseFloat(difficultEasy[0][1].replaceAll(",", "."));
 		}
-		if (wordsAll > 56) {
+		if (wordsAll > 55 && wordsAll <=100) {
 			diffValueHard = 56;
 			valueThird = 1.0f;
 		}
 		if (wordsAll != 0) {
-			if (wordsAll > 0 && wordsAll < 21) {
+			if (wordsAll > 0 && wordsAll < 20) {
 				for (int i = 0; i < difficultEasy.length; i++) {
 					for (int j = 0; j < difficultEasy.length; j++) {
 						if (j == 0) {
@@ -495,7 +510,7 @@ public class FuzzyLogic {
 					}
 				}
 			}
-			if (wordsAll > 19 && wordsAll < 39) {
+			if (wordsAll > 10 && wordsAll < 55) {
 				for (int i = 0; i < difficultMedium.length; i++) {
 					for (int j = 0; j < difficultMedium.length; j++) {
 						if (j == 0) {
@@ -507,7 +522,7 @@ public class FuzzyLogic {
 					}
 				}
 			}
-			if (wordsAll > 35 && wordsAll < 59) {
+			if (wordsAll > 45 && wordsAll < 100) {
 				for (int i = 0; i < difficultHard.length; i++) {
 					for (int j = 0; j < difficultHard.length; j++) {
 						if (j == 0) {
@@ -586,8 +601,9 @@ public class FuzzyLogic {
 			collectionDiff = new String("hard");
 		}
 		diffValueEasy = valueFirst;
-		diffValueMedium = valueSecond + bonus;
-		diffValueHard = valueThird + bonus;
+		diffValueMedium = valueSecond ;
+		diffValueHard = valueThird ;
+		
 	}
 
 	private float calcResult(float wordsAll, float wordsGood) {
@@ -612,8 +628,8 @@ public class FuzzyLogic {
 		 * Rule6: IF medium AND hard THEN Lgood
 		 * 
 		 * Rule7: IF good AND easy THEN mid 
-		 * Rule8: IF good AND medium THEN Lgood 
-		 * Rule9: IF good AND hard THEN good
+		 * Rule8: IF good AND medium THEN good 
+		 * Rule9: IF good AND hard THEN excellent
 		 * 
 		 */
 
@@ -641,7 +657,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*h1+30*h2+40*0+50*h3+70*0+90*0) / (h1+h2+0+h3+0);
+			y = (10*h1+30*h2+40*0+50*h3+70*0+90*0+100*0) / (h1+h2+0+h3+0+0);
 
 		}
 		if (difficult.equals("medium") && collectionRes.equals("bad")) {
@@ -659,7 +675,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*0+30*h1+40*0+50*h2+70*h3+90*0) / (0+h1+0+h2+h3+0);
+			y = (10*0+30*h1+40*0+50*h2+70*h3+90*0+100*0) / (0+h1+0+h2+h3+0+0);
 
 		}
 		if (difficult.equals("hard") && collectionRes.equals("bad")) {
@@ -677,7 +693,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*0+30*0+40*h1+50*0+70*h2+90*h3) / (h1+h2+0+h3+0);
+			y = (10*0+30*0+40*h1+50*0+70*h2+90*h3+100*0) / (h1+h2+0+h3+0+0);
 
 		}
 		if (difficult.equals("easy") && collectionRes.equals("medium")) {
@@ -695,7 +711,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*h2+30*h1+40*0+50*h3+70*0+90*0) / (h1+h2+0+h3+0);
+			y = (10*h2+30*h1+40*0+50*h3+70*0+90*0+100*0) / (h1+h2+0+h3+0+0);
 
 		}
 		if (difficult.equals("medium") && collectionRes.equals("medium")) {
@@ -713,7 +729,7 @@ public class FuzzyLogic {
 
 			float h = Math.max(h2, h1);
 
-			y = (10*0+30*0+40*0+50*h+70*h3+90*0) / (h+0+0+h3+0);
+			y = (10*0+30*0+40*0+50*h+70*h3+90*0+100*0) / (h+0+0+h3+0+0);
 
 		}
 		if (difficult.equals("hard") && collectionRes.equals("medium")) {
@@ -731,7 +747,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*0+30*0+40*h2+50*0+70*h1+90*h3) / (h1+h2+0+0+h3+0);
+			y = (10*0+30*0+40*h2+50*0+70*h1+90*h3+100*0) / (h1+h2+0+0+h3+0+0);
 
 		}
 		if (difficult.equals("easy") && collectionRes.equals("good")) {
@@ -749,7 +765,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*h3+30*h2+40*0+50*h1+70*0+90*0) / (h1+h2+0+h3+0);
+			y = (10*h3+30*h2+40*0+50*h1+70*0+90*0+100*0) / (h1+h2+0+h3+0+0);
 
 		}
 		if (difficult.equals("medium") && collectionRes.equals("good")) {
@@ -767,7 +783,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*h3+30*0+40*0+50*h2+70*h1+90*0) / (h1+0+h2+0+h3+0);
+			y = (10*h3+30*0+40*0+50*h2+70*h1+90*0+100*0) / (h1+0+h2+0+h3+0+0);
 
 		}
 		if (difficult.equals("hard") && collectionRes.equals("good")) {
@@ -785,7 +801,7 @@ public class FuzzyLogic {
 
 			
 
-			y = (10*0+30*0+40*h3+50*h2+70*0+90*h1) / (h1+0+h2+0+h3+0);
+			y = (10*0+30*0+40*h3+50*h2+70*0+90*0+100*h1) / (0+0+h3+h2+0+0+h1);
 
 		}
 		System.out.println("Fuzzy value is: "+y);
@@ -816,8 +832,9 @@ public class FuzzyLogic {
 				pw.println("30 - zły wynik, nadal bardzo słabo pracuj dalej");
 				pw.println("40 - średnio, powinieneś nadal dużo pracować");
 				pw.println("50 - robisz postępy, popracuj jeszcze trochę aby było lepiej");
-				pw.println("70 - całkiem niezle, idzie Ci coraz lepiej");
+				pw.println("70 - całkiem nieźle, idzie Ci coraz lepiej");
 				pw.println("90 - bardzo dobrze, ciężką pracą osiągasz sukces");
+				pw.println("100 – rewelacja, opanowałeś ten plik testowy do perfekcji");
 				pw.close();
 			
 			
@@ -842,8 +859,9 @@ public class FuzzyLogic {
 					pw.println("30 - zły wynik, nadal bardzo słabo pracuj dalej");
 					pw.println("40 - średnio, powinieneś nadal dużo pracować");
 					pw.println("50 - robisz postępy, popracuj jeszcze trochę aby było lepiej");
-					pw.println("70 - całkiem niezle, idzie Ci coraz lepiej");
+					pw.println("70 - całkiem nieźle, idzie Ci coraz lepiej");
 					pw.println("90 - bardzo dobrze, ciężką pracą osiągasz sukces");
+					pw.println("100 – rewelacja, opanowałeś ten plik testowy do perfekcji");
 					pw.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

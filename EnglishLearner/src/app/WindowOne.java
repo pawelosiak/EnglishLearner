@@ -47,8 +47,8 @@ public class WindowOne extends JFrame implements ActionListener, ItemListener {
 
 	private JCheckBox nauka = new JCheckBox("Learn", false);
 	private JCheckBox test = new JCheckBox("Test - experimental", false);
-	private JCheckBox tworzenie = new JCheckBox("Add test/lern file", false);
-	private JCheckBox dodanie = new JCheckBox("Add words to test/lern file", false);
+	private JCheckBox tworzenie = new JCheckBox("Add test/learn file", false);
+	private JCheckBox dodanie = new JCheckBox("Add words to test/learn file", false);
 	private Dimension rozmiar = new Dimension(640, 280);
 	private JPanel boxy = new JPanel();
 	private JPanel guziki = new JPanel();
